@@ -1,5 +1,5 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+#MTNInvest System Rules
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+#Next.js: Always read docs before coding Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. 
+Your training data is outdated — the local docs are the source of truth for this version. 
+Heed all deprecation notices regarding async Request APIs (params, searchParams, cookies, headers).
