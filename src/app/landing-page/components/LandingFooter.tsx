@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import AppLogo from '@/components/ui/AppLogo';
+import AppLogo from '../../../components/ui/AppLogo';
 import { Share2, X, AtSign, Globe } from 'lucide-react';
 import type { FC, SVGProps } from 'react';
 

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { PlusCircle, ArrowUpRight, RefreshCw, Bell } from 'lucide-react';
-import Modal from '@/components/ui/Modal';
+import Modal from '../../../components/ui/Modal';
 import DepositWithdrawForm from './DepositWithdrawForm';
 
 export default function DashboardActions() {

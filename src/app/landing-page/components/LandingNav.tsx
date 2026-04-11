@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import AppLogo from '@/components/ui/AppLogo';
+import AppLogo from '../../../components/ui/AppLogo';
 import { Menu, X } from 'lucide-react';
 
 export default function LandingNav() {
