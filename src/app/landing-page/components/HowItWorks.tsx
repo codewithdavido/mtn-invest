@@ -20,28 +20,28 @@ const steps: Step[] = [
     number: '01',
     IconComponent: UserPlus as IconComponent,
     title: 'Create Your Account',
-    description: 'Sign up with your MTN number and complete a quick identity verification. Takes under 5 minutes with your Ghana Card.',
+    description: 'Sign up in minutes. We use your NIN for secure identity verification, keeping your investment account safe and compliant.',
   },
   {
     id: 'step-2',
     number: '02',
-    IconComponent: CreditCard as IconComponent,
-    title: 'Choose Your Plan',
-    description: 'Pick a Fixed Deposit term or a Savings Plan that fits your goals. Compare rates, minimums, and maturity dates side by side.',
+    IconComponent: ShieldCheck as IconComponent, // Changed icon to Shield
+    title: 'Link Your Card',
+    description: 'Connect your Mastercard, Visa, or Verve card once. We use bank-grade encryption to ensure your details are never stored on our servers.',
   },
   {
     id: 'step-3',
     number: '03',
-    IconComponent: TrendingUp as IconComponent,
-    title: 'Fund via MTN MoMo',
-    description: 'Transfer from your MTN Mobile Money wallet instantly. No bank account needed — just your MoMo PIN to confirm.',
+    IconComponent: CreditCard as IconComponent,
+    title: 'Choose & Fund',
+    description: 'Pick an investment plan and fund it with a single click. No need to re-enter card details for future investments.',
   },
   {
     id: 'step-4',
     number: '04',
-    IconComponent: Banknote as IconComponent,
-    title: 'Watch Your Money Grow',
-    description: 'Track daily interest accrual on your dashboard. Withdraw at maturity or set up automatic reinvestment for compounding returns.',
+    IconComponent: TrendingUp as IconComponent,
+    title: 'Grow & Withdraw',
+    description: 'Monitor your daily earnings on your dashboard. At maturity, withdraw directly to your bank account or reinvest to compound your gains.',
   },
 ];
 
@@ -62,7 +62,6 @@ export default function HowItWorks() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {steps?.map((step, i) => (
             <div key={step?.id} className="relative">
-              {/* Connector line */}
               {i < steps?.length - 1 && (
                 <div className="hidden lg:block absolute top-10 left-[calc(100%-1rem)] w-8 h-0.5 bg-mtn-yellow/30 z-10" />
               )}
@@ -83,7 +82,7 @@ export default function HowItWorks() {
         {/* CTA */}
         <div className="text-center">
           <Link
-            href="/investor-dashboard"
+            href="/signup"
             className="inline-flex items-center gap-2 bg-mtn-yellow text-black font-bold px-10 py-4 rounded-2xl hover:bg-mtn-yellow-dark transition-all duration-150 active:scale-95 text-base shadow-lg shadow-mtn-yellow/20"
           >
             Open Your Account Now

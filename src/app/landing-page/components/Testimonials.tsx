@@ -5,33 +5,33 @@ import { Star } from 'lucide-react';
 const testimonials = [
   {
     id: 'test-1',
-    name: 'Abena Mensah',
-    role: 'Small Business Owner, Accra',
-    avatar: 'AM',
+    name: 'Chioma Okafor',
+    role: 'Small Business Owner, Lagos',
+    avatar: 'CO',
     rating: 5,
-    text: 'I started with the Y\'ello Savings Plan at GH₵ 100/month. Within a year I had saved enough for my shop renovation — and the interest was a bonus I didn\'t expect. MTNInvest made saving automatic and effortless.',
+    text: 'I started with the Y\'ello Savings Plan at ₦5,000/month. Within a year I had saved enough for my shop renovation — and the interest was a bonus I didn\'t expect. MTNInvest made saving automatic and effortless.',
   },
   {
     id: 'test-2',
-    name: 'Kofi Boateng',
-    role: 'Teacher, Kumasi',
-    avatar: 'KB',
+    name: 'Emeka Nwosu',
+    role: 'Teacher, Enugu',
+    avatar: 'EN',
     rating: 5,
-    text: 'The 12-month Fixed Deposit at 18.5% is unbeatable. I moved my emergency fund here from a regular savings account and the difference in returns after one year was over GH₵ 3,400. The dashboard makes it easy to track everything.',
+    text: 'The 12-month Fixed Deposit at 18.5% is unbeatable. I moved my emergency fund here from a regular savings account and the difference in returns after one year was over ₦180,000. The dashboard makes it easy to track everything.',
   },
   {
     id: 'test-3',
-    name: 'Fatima Al-Hassan',
-    role: 'Nurse, Tamale',
+    name: 'Fatima Abdullahi',
+    role: 'Nurse, Kaduna',
     avatar: 'FA',
     rating: 5,
-    text: 'I love that I can invest through my MoMo wallet without needing a bank account. The Pesewa Susu plan deducts automatically on payday. No temptation to spend it. My first maturity payout was a great feeling.',
+    text: 'I love that I can invest through my MoMo wallet without needing a bank account. The Naira Thrift plan deducts automatically on payday. No temptation to spend it. My first maturity payout was a great feeling.',
   },
   {
     id: 'test-4',
-    name: 'Emmanuel Tetteh',
-    role: 'Freelance Designer, Tema',
-    avatar: 'ET',
+    name: 'Tunde Adeyemi',
+    role: 'Freelance Designer, Abuja',
+    avatar: 'TA',
     rating: 4,
     text: 'The investment dashboard is clean and shows me exactly how much interest I\'ve earned each day. I switched from a competitor and the rates here are noticeably better. Customer support was also responsive when I had a question.',
   },
@@ -44,7 +44,7 @@ export default function Testimonials() {
         <div className="text-center mb-16">
           <p className="text-sm font-semibold text-mtn-yellow-dark uppercase tracking-widest mb-3">Investor Stories</p>
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Real People, Real Returns</h2>
-          <p className="text-lg text-gray-500">Over 247,000 Ghanaians are growing their wealth with MTNInvest.</p>
+          <p className="text-lg text-gray-500">Over 247,000 Nigerians are growing their wealth with MTNInvest.</p>
         </div>
 
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">

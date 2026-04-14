@@ -11,17 +11,17 @@ const products = [
     tagline: 'Lock in high returns',
     description: 'Commit your funds for a fixed term and earn guaranteed interest. The longer you lock, the higher the rate — up to 18.5% p.a.',
     rates: [
-      { term: '3 Months', rate: '12.50%' },
-      { term: '6 Months', rate: '14.75%' },
+      { term: '3 Months',  rate: '12.50%' },
+      { term: '6 Months',  rate: '14.75%' },
       { term: '12 Months', rate: '18.50%' },
     ],
-    minAmount: 'GH₵ 500',
+    minAmount: '₦10,000',
     features: [
       'Guaranteed fixed interest rate',
       'Auto-renewal option at maturity',
       'Early exit with penalty waiver on medical grounds',
       'Interest paid at maturity or monthly',
-      'FDIC-equivalent coverage up to GH₵ 50,000',
+      'NDIC coverage up to ₦5,000,000',
     ],
     cta: 'Open Fixed Deposit',
     highlight: true,
@@ -31,13 +31,13 @@ const products = [
     IconComponent: RefreshCw,
     type: 'Savings Plan',
     tagline: 'Save at your own pace',
-    description: 'Set up automated daily, weekly, or monthly contributions. Access your funds anytime with competitive interest on every cedi saved.',
+    description: 'Set up automated daily, weekly, or monthly contributions. Access your funds anytime with competitive interest on every naira saved.',
     rates: [
-      { term: 'Y\'ello Savings', rate: '9.50%' },
-      { term: 'Pesewa Susu',    rate: '11.00%' },
-      { term: 'Goal Saver',    rate: '10.25%' },
+      { term: "Y'ello Savings",  rate: '9.50%' },
+      { term: 'Naira Thrift',    rate: '11.00%' },
+      { term: 'Goal Saver',      rate: '10.25%' },
     ],
-    minAmount: 'GH₵ 50',
+    minAmount: '₦1,000',
     features: [
       'Flexible contribution frequency',
       'Instant withdrawal, no lock-in period',
@@ -69,7 +69,8 @@ export default function ProductCards() {
               key={p?.id}
               className={`rounded-3xl p-8 border transition-all duration-200 hover:shadow-card-hover ${
                 p?.highlight
-                  ? 'bg-gray-900 border-gray-700 text-white' :'bg-white border-gray-200 text-gray-900'
+                  ? 'bg-gray-900 border-gray-700 text-white'
+                  : 'bg-white border-gray-200 text-gray-900'
               }`}
             >
               {/* Header */}
@@ -88,7 +89,7 @@ export default function ProductCards() {
 
               {/* Rates */}
               <div className={`rounded-2xl p-4 mb-6 ${p?.highlight ? 'bg-white/5' : 'bg-gray-50'}`}>
-                <p className={`text-xs font-semibold uppercase tracking-widest mb-3 ${p?.highlight ? 'text-gray-400' : 'text-gray-400'}`}>Interest Rates</p>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-gray-400">Interest Rates</p>
                 <div className="space-y-2">
                   {p?.rates?.map((r, i) => (
                     <div key={`rate-${p?.id}-${i}`} className="flex items-center justify-between">
@@ -116,10 +117,11 @@ export default function ProductCards() {
               </ul>
 
               <Link
-                href="/investor-dashboard"
+                href="/signup"
                 className={`w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-150 active:scale-95 ${
                   p?.highlight
-                    ? 'bg-mtn-yellow text-black hover:bg-mtn-yellow-dark' :'bg-gray-900 text-white hover:bg-gray-800'
+                    ? 'bg-mtn-yellow text-black hover:bg-mtn-yellow-dark'
+                    : 'bg-gray-900 text-white hover:bg-gray-800'
                 }`}
               >
                 {p?.cta}

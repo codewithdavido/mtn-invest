@@ -12,17 +12,17 @@ interface TrustBullet {
 }
 
 const trustBullets: TrustBullet[] = [
-  { IconComponent: ShieldCheck as IconComponent, text: 'Bank-grade security' },
+  { IconComponent: ShieldCheck as IconComponent, text: 'PCIDSS Secure' },
   { IconComponent: TrendingUp as IconComponent,  text: 'Up to 18.5% p.a.' },
-  { IconComponent: Smartphone as IconComponent,  text: 'Via MTN MoMo' },
+  { IconComponent: Smartphone as IconComponent,  text: 'Link Any Debit Card' },
 ];
 
 const rates = [
-  { plan: 'Fixed Deposit — 3 Months',  rate: '12.50%', min: 'GH₵ 500',   badge: 'Popular' },
-  { plan: 'Fixed Deposit — 6 Months',  rate: '14.75%', min: 'GH₵ 500',   badge: null },
-  { plan: 'Fixed Deposit — 12 Months', rate: '18.50%', min: 'GH₵ 1,000', badge: 'Best Rate' },
-  { plan: 'Y\'ello Savings Plan',       rate: '9.50%',  min: 'GH₵ 50',    badge: 'Flexible' },
-  { plan: 'Pesewa Susu Monthly',        rate: '11.00%', min: 'GH₵ 100',   badge: null },
+  { plan: 'Fixed Deposit — 3 Months',  rate: '12.50%', min: '₦10,000',  badge: 'Popular' },
+  { plan: 'Fixed Deposit — 6 Months',  rate: '14.75%', min: '₦10,000',  badge: null },
+  { plan: 'Fixed Deposit — 12 Months', rate: '18.50%', min: '₦50,000',  badge: 'Best Rate' },
+  { plan: "Y'ello Savings Plan",        rate: '9.50%',  min: '₦1,000',   badge: 'Flexible' },
+  { plan: 'Naira Thrift Monthly',       rate: '11.00%', min: '₦5,000',   badge: null },
 ];
 
 export default function HeroSection() {
@@ -34,6 +34,7 @@ export default function HeroSection() {
         <div className="absolute bottom-20 right-10 w-72 h-72 bg-mtn-yellow rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-mtn-yellow rounded-full blur-3xl opacity-5" />
       </div>
+
       {/* Grid overlay */}
       <div
         className="absolute inset-0 opacity-5"
@@ -42,6 +43,7 @@ export default function HeroSection() {
           backgroundSize: '60px 60px'
         }}
       />
+
       <div className="relative max-w-screen-xl mx-auto px-6 lg:px-10 py-24 grid lg:grid-cols-2 gap-16 items-center">
         {/* Left content */}
         <div>
@@ -57,7 +59,9 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-lg text-gray-300 leading-relaxed mb-8 max-w-lg">
-            MTNInvest brings you high-yield fixed deposits and flexible savings plans — built on Africa&apos;s most trusted mobile network. Start with as little as GH₵ 50.
+            MTNInvest brings you high-yield fixed deposits and flexible savings plans. 
+            Link your card once and automate your wealth—just like your favorite 
+            subscription apps. Start with as little as ₦1,000.
           </p>
 
           {/* Trust bullets */}
@@ -73,7 +77,7 @@ export default function HeroSection() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/investor-dashboard"
+              href="/signup"
               className="inline-flex items-center justify-center gap-2 bg-mtn-yellow text-black font-bold px-8 py-4 rounded-2xl hover:bg-mtn-yellow-dark transition-all duration-150 active:scale-95 text-base shadow-lg shadow-mtn-yellow/20"
             >
               Open an Account
@@ -112,6 +116,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
         <div className="w-6 h-10 border-2 border-white/20 rounded-full flex items-start justify-center pt-2">

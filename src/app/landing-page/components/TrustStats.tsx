@@ -14,10 +14,10 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { id: 'stat-investors', IconComponent: Users as IconComponent,    value: '247,000+',   label: 'Active Investors',         sub: 'Across Ghana & Nigeria' },
-  { id: 'stat-aum',       IconComponent: Banknote as IconComponent, value: 'GH₵ 1.4B+', label: 'Assets Under Management',  sub: 'Total investor funds' },
-  { id: 'stat-return',    IconComponent: Award as IconComponent,    value: '18.5%',      label: 'Highest Annual Rate',       sub: 'On 12-month fixed deposits' },
-  { id: 'stat-years',     IconComponent: Calendar as IconComponent, value: '8 Years',    label: 'Trusted Since 2018',        sub: 'Regulated by Bank of Ghana' },
+  { id: 'stat-investors', IconComponent: Users as IconComponent,    value: '247,000+',  label: 'Active Investors',        sub: 'Across Nigeria' },
+  { id: 'stat-aum',       IconComponent: Banknote as IconComponent, value: '₦2.1T+',    label: 'Assets Under Management', sub: 'Total investor funds' },
+  { id: 'stat-return',    IconComponent: Award as IconComponent,    value: '18.5%',     label: 'Highest Annual Rate',     sub: 'On 12-month fixed deposits' },
+  { id: 'stat-years',     IconComponent: Calendar as IconComponent, value: '8 Years',   label: 'Trusted Since 2018',      sub: 'Regulated by CBN' },
 ];
 
 export default function TrustStats() {
