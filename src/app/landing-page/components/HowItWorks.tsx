@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { UserPlus, CreditCard, TrendingUp, Banknote } from 'lucide-react';
+import { UserPlus, CreditCard, ShieldCheck, TrendingUp, Banknote, ArrowRight } from 'lucide-react';
 import type { FC, SVGProps } from 'react';
 
 type IconComponent = FC<SVGProps<SVGSVGElement> & { size?: number | string }>;

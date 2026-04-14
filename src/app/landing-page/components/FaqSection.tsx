@@ -69,30 +69,36 @@ export default function FaqSection() {
 
           {/* Right — accordion */}
           <div className="lg:col-span-2 space-y-2">
-            {faqs?.map((faq) => {
-              const isOpen = openId === faq?.id;
+            {faqs.map((faq) => {
+              const isOpen = openId === faq.id;
               return (
                 <div
-                  key={faq?.id}
-                  className={`border rounded-2xl overflow-hidden transition-all duration-200 ${isOpen ? "border-mtn-yellow" : "border-gray-200"}`}
+                  key={faq.id}
+                  className={`border rounded-2xl overflow-hidden transition-all duration-200 ${
+                    isOpen
+                      ? "border-mtn-yellow ring-1 ring-mtn-yellow/30"
+                      : "border-gray-200"
+                  }`}
                 >
                   <button
                     className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors duration-150"
-                    onClick={() => setOpenId(isOpen ? null : faq?.id)}
-                    aria-expanded={isOpen}
+                    onClick={() => setOpenId(isOpen ? null : faq.id)}
+                    aria-expanded={!!isOpen}
                   >
                     <span className="text-sm font-semibold text-gray-900 pr-4">
-                      {faq?.q}
+                      {faq.q}
                     </span>
                     <ChevronDown
                       size={18}
-                      className={`shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-mtn-yellow-dark" : ""}`}
+                      className={`shrink-0 text-gray-400 transition-transform duration-200 ${
+                        isOpen ? "rotate-180 text-mtn-yellow-dark" : ""
+                      }`}
                     />
                   </button>
                   {isOpen && (
                     <div className="px-6 pb-5 animate-slide-up">
                       <p className="text-sm text-gray-500 leading-relaxed">
-                        {faq?.a}
+                        {faq.a}
                       </p>
                     </div>
                   )}
