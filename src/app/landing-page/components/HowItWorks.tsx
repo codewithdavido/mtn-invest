@@ -20,7 +20,7 @@ const steps: Step[] = [
     number: '01',
     IconComponent: UserPlus as IconComponent,
     title: 'Create Your Account',
-    description: 'Sign up in minutes. We use your NIN for secure identity verification, keeping your investment account safe and compliant.',
+    description: 'Set up your secure investment profile in minutes. We use bank-grade encryption to keep your data safe while you focus on growing your wealth.',
   },
   {
     id: 'step-2',
