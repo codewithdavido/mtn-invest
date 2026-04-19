@@ -90,14 +90,14 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside
         className={`
-        fixed top-0 left-0 h-full w-64 bg-gray-900 z-30 flex flex-col
+        fixed top-0 left-0 min-h-screen h-full w-64 bg-gray-900 z-30 flex flex-col
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-        md:translate-x-0 md:static md:z-auto
+        md:translate-x-0 md:sticky md:top-0 md:self-start md:h-screen
       `}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
           <Link href="/" className="flex items-center gap-2.5">
             <AppLogo size={32} />
             <span className="font-bold text-lg text-white tracking-tight">
@@ -105,6 +105,7 @@ export default function DashboardLayout({
             </span>
           </Link>
           <button
+            aria-label="Close sidebar"
             className="md:hidden text-gray-400 hover:text-white"
             onClick={() => setSidebarOpen(false)}
           >
@@ -113,7 +114,7 @@ export default function DashboardLayout({
         </div>
 
         {/* User info */}
-        <div className="px-6 py-4 border-b border-white/10">
+        <div className="px-6 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-mtn-yellow flex items-center justify-center shrink-0">
               <span className="text-sm font-bold text-black">CO</span>
@@ -138,7 +139,7 @@ export default function DashboardLayout({
                 onClick={() => setSidebarOpen(false)}
                 className={`
                   flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium
-                  transition-all duration-150 group
+                  transition-all duration-150
                   ${
                     isActive
                       ? "bg-mtn-yellow text-black"
@@ -155,9 +156,10 @@ export default function DashboardLayout({
         </nav>
 
         {/* Logout */}
-        <div className="px-3 py-4 border-t border-white/10">
+        <div className="px-3 py-4 border-t border-white/10 shrink-0">
           <button
             onClick={handleLogout}
+            aria-label="Logout"
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-all duration-150"
           >
             <LogOut size={18} className="shrink-0" />
@@ -167,11 +169,12 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top header */}
-        <header className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <header className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shrink-0">
           {/* Mobile menu button */}
           <button
+            aria-label="Open sidebar"
             className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
             onClick={() => setSidebarOpen(true)}
           >
@@ -197,7 +200,10 @@ export default function DashboardLayout({
             </div>
 
             {/* Notifications */}
-            <button className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-all duration-150">
+            <button
+              aria-label="Notifications"
+              className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-all duration-150"
+            >
               <Bell size={20} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
             </button>
@@ -210,7 +216,7 @@ export default function DashboardLayout({
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   );
