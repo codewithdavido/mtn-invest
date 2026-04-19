@@ -79,35 +79,18 @@ export default function SignupPage() {
     if (!validate()) return;
 
     setIsLoading(true);
-    try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setErrors({ general: data.error || "Something went wrong." });
-        return;
-      }
-
-      setSuccessMessage(
-        `Welcome, ${formData.fullName.split(" ")[0]}! Account created. Redirecting...`,
-      );
-      setTimeout(() => router.push("/investor-dashboard"), 2500);
-    } catch (err) {
-      setErrors({ general: "Something went wrong. Please try again." });
-    } finally {
+    // Simulating a successful signup for UI testing
+    setTimeout(() => {
       setIsLoading(false);
-    }
-  };
+      setSuccessMessage(
+        "Welcome! Your account has been created. Redirecting...",
+      );
 
+      // This moves you to the dashboard we are building
+      setTimeout(() => router.push("/investor-dashboard"), 2000);
+    }, 1500);
+  };
   return (
     <div className="flex flex-col min-h-screen bg-mtn-gray-50">
       <LandingNav />

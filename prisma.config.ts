@@ -1,7 +1,16 @@
-import { defineConfig } from 'prisma/config'
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
-export default defineConfig({
-  datasource: {
-    url: "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza183Z3JKV19fNkx3YXZETXF2RU9tNGYiLCJhcGlfa2V5IjoiMDFLUEFBU0hLSFBaVFFQNUVCTURCUTUxU1MiLCJ0ZW5hbnRfaWQiOiI0MGVmMTMzZGM3YmVhMGUwMDdkOTAwMmYwMjk4MWU4NGMzNWQ0ZGM4YjdiMGIwMTliZDI0ZWQyNTNhNTZhOGE0IiwiaW50ZXJuYWxfc2VjcmV0IjoiZGI5NWQ3YzAtYWZjOS00NmM0LWE5ZmMtOTQ1ODE2NzhiYjQxIn0.yHnm7cHe28q6vlnkZLP3hN7yGkfU99OoH3jW0TJbQUU",
-  },
-}) 
+const globalForPrisma = globalThis as unknown as {
+  prisma: ReturnType<typeof makePrismaClient> | undefined
+}
+
+function makePrismaClient() {
+  return new PrismaClient({ 
+    adapter: null 
+  }).$extends(withAccelerate())
+}
+
+export const prisma = globalForPrisma.prisma ?? makePrismaClient()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
