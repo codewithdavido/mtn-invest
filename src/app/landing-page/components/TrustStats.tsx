@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { Users, Banknote, Calendar, Award } from 'lucide-react';
+import { Users, Banknote, Calendar, TrendingUp } from 'lucide-react';
 import type { FC, SVGProps } from 'react';
 
 type IconComponent = FC<SVGProps<SVGSVGElement> & { size?: number | string }>;
@@ -14,10 +14,10 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { id: 'stat-investors', IconComponent: Users as IconComponent,    value: '247,000+',  label: 'Active Investors',        sub: 'Across Nigeria' },
-  { id: 'stat-aum',       IconComponent: Banknote as IconComponent, value: '₦2.1T+',    label: 'Assets Under Management', sub: 'Total investor funds' },
-  { id: 'stat-return',    IconComponent: Award as IconComponent,    value: '18.5%',     label: 'Highest Annual Rate',     sub: 'On 12-month fixed deposits' },
-  { id: 'stat-years',     IconComponent: Calendar as IconComponent, value: '8 Years',   label: 'Trusted Since 2018',      sub: 'Regulated by CBN' },
+  { id: 'stat-investors', IconComponent: Users as IconComponent,      value: '247,000+', label: 'Active Investors',       sub: 'Across Nigeria'                  },
+  { id: 'stat-aum',       IconComponent: Banknote as IconComponent,   value: '₦2.1T+',   label: 'Assets Under Management', sub: 'Total investor funds'           },
+  { id: 'stat-return',    IconComponent: TrendingUp as IconComponent,  value: '50%',      label: 'Monthly Return Rate',     sub: 'On every investment plan'       },
+  { id: 'stat-years',     IconComponent: Calendar as IconComponent,    value: '8 Years',  label: 'Trusted Since 2018',      sub: 'Regulated by CBN'               },
 ];
 
 export default function TrustStats() {

@@ -9,7 +9,7 @@ const testimonials = [
     role: 'Small Business Owner, Lagos',
     avatar: 'CO',
     rating: 5,
-    text: 'I started with the Y\'ello Savings Plan at ₦5,000/month. Within a year I had saved enough for my shop renovation — and the interest was a bonus I didn\'t expect. MTNInvest made saving automatic and effortless.',
+    text: 'I started with the Basic plan — 4 shares. Every 1st of the month ₦17,800 lands in my wallet without me doing anything. I\'ve since upgraded to Standard. MTNInvest is the best financial decision I\'ve ever made.',
   },
   {
     id: 'test-2',
@@ -17,7 +17,7 @@ const testimonials = [
     role: 'Teacher, Enugu',
     avatar: 'EN',
     rating: 5,
-    text: 'The 12-month Fixed Deposit at 18.5% is unbeatable. I moved my emergency fund here from a regular savings account and the difference in returns after one year was over ₦180,000. The dashboard makes it easy to track everything.',
+    text: 'I invested in the Premium plan and I receive ₦89,000 every month. That\'s more than my salary! The dashboard is clean, withdrawals are fast, and the team is responsive. I recommend this to everyone.',
   },
   {
     id: 'test-3',
@@ -25,7 +25,7 @@ const testimonials = [
     role: 'Nurse, Kaduna',
     avatar: 'FA',
     rating: 5,
-    text: 'I love that I can invest through my MoMo wallet without needing a bank account. The Naira Thrift plan deducts automatically on payday. No temptation to spend it. My first maturity payout was a great feeling.',
+    text: 'I love how simple it is. I linked my card, topped up my wallet, picked the Standard plan and that was it. ₦44,500 every month, on time, every time. The withdrawal to my GTBank account takes less than 24 hours.',
   },
   {
     id: 'test-4',
@@ -33,7 +33,7 @@ const testimonials = [
     role: 'Freelance Designer, Abuja',
     avatar: 'TA',
     rating: 4,
-    text: 'The investment dashboard is clean and shows me exactly how much interest I\'ve earned each day. I switched from a competitor and the rates here are noticeably better. Customer support was also responsive when I had a question.',
+    text: 'I used the Custom plan to invest in 7 shares — my own amount, my own terms. The live calculator on the invest page showed me exactly what I\'d earn before I committed. Very transparent and professional platform.',
   },
 ];
 

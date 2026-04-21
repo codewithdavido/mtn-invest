@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { UserPlus, CreditCard, ShieldCheck, TrendingUp, Banknote, ArrowRight } from 'lucide-react';
+import { UserPlus, CreditCard, TrendingUp, Banknote } from 'lucide-react';
 import type { FC, SVGProps } from 'react';
 
 type IconComponent = FC<SVGProps<SVGSVGElement> & { size?: number | string }>;
@@ -20,28 +20,28 @@ const steps: Step[] = [
     number: '01',
     IconComponent: UserPlus as IconComponent,
     title: 'Create Your Account',
-    description: 'Set up your secure investment profile in minutes. We use bank-grade encryption to keep your data safe while you focus on growing your wealth.',
+    description: 'Sign up with your name, email and phone number. Verify your identity with your NIN in under 5 minutes.',
   },
   {
     id: 'step-2',
     number: '02',
-    IconComponent: ShieldCheck as IconComponent, // Changed icon to Shield
-    title: 'Link Your Card',
-    description: 'Connect your Mastercard, Visa, or Verve card once. We use bank-grade encryption to ensure your details are never stored on our servers.',
+    IconComponent: CreditCard as IconComponent,
+    title: 'Link Your Card & Top Up',
+    description: 'Link your Mastercard, Visa, or Verve card once. Top up your wallet with a minimum of ₦10,000 instantly.',
   },
   {
     id: 'step-3',
     number: '03',
-    IconComponent: CreditCard as IconComponent,
-    title: 'Choose & Fund',
-    description: 'Pick an investment plan and fund it with a single click. No need to re-enter card details for future investments.',
+    IconComponent: TrendingUp as IconComponent,
+    title: 'Choose Your Plan & Invest',
+    description: 'Pick a tier — Basic, Standard, Premium, Elite — or set a custom number of shares. Minimum 4 shares at ₦8,900 each.',
   },
   {
     id: 'step-4',
     number: '04',
-    IconComponent: TrendingUp as IconComponent,
-    title: 'Grow & Withdraw',
-    description: 'Monitor your daily earnings on your dashboard. At maturity, withdraw directly to your bank account or reinvest to compound your gains.',
+    IconComponent: Banknote as IconComponent,
+    title: 'Collect Your Monthly Returns',
+    description: 'Every 1st of the month, 50% of your investment is credited to your wallet. Withdraw to your bank account anytime after.',
   },
 ];
 
@@ -52,9 +52,9 @@ export default function HowItWorks() {
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-sm font-semibold text-mtn-yellow-dark uppercase tracking-widest mb-3">How It Works</p>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Start Investing in 4 Simple Steps</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Start Earning in 4 Simple Steps</h2>
           <p className="text-lg text-gray-500 max-w-lg mx-auto">
-            No branch visits. No complex paperwork. Everything happens on your phone through MTN&apos;s trusted network.
+            No branch visits. No complex paperwork. Sign up, invest, and start receiving monthly returns directly to your wallet.
           </p>
         </div>
 
@@ -87,7 +87,7 @@ export default function HowItWorks() {
           >
             Open Your Account Now
           </Link>
-          <p className="text-sm text-gray-400 mt-3">No minimum commitment. Cancel anytime on Savings Plans.</p>
+          <p className="text-sm text-gray-400 mt-3">Min. investment: 4 shares (₦35,600) · Returns paid every 1st of the month.</p>
         </div>
       </div>
     </section>
