@@ -14,10 +14,10 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { id: 'stat-investors', IconComponent: Users as IconComponent,      value: '247,000+', label: 'Active Investors',       sub: 'Across Nigeria'                  },
-  { id: 'stat-aum',       IconComponent: Banknote as IconComponent,   value: '₦2.1T+',   label: 'Assets Under Management', sub: 'Total investor funds'           },
-  { id: 'stat-return',    IconComponent: TrendingUp as IconComponent,  value: '50%',      label: 'Monthly Return Rate',     sub: 'On every investment plan'       },
-  { id: 'stat-years',     IconComponent: Calendar as IconComponent,    value: '8 Years',  label: 'Trusted Since 2018',      sub: 'Regulated by CBN'               },
+  { id: 'stat-investors', IconComponent: Users as IconComponent,     value: '247,000+', label: 'Active Investors',        sub: 'Across Nigeria'             },
+  { id: 'stat-aum',       IconComponent: Banknote as IconComponent,  value: '₦2.1T+',   label: 'Assets Under Management', sub: 'Total investor funds'       },
+  { id: 'stat-return',    IconComponent: TrendingUp as IconComponent, value: '15%',      label: 'Monthly Return Rate',     sub: 'On every investment plan'   },
+  { id: 'stat-years',     IconComponent: Calendar as IconComponent,  value: '8 Years',  label: 'Trusted Since 2018',      sub: 'Regulated by CBN'           },
 ];
 
 export default function TrustStats() {

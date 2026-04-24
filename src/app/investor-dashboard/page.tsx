@@ -35,7 +35,7 @@ const summaryCards = [
   {
     id: 'card-returns',
     label: 'Total Returns Earned',
-    value: '₦53,400.00',
+    value: '₦10,680.00',
     sub: 'Since you joined',
     icon: CircleDollarSign,
     color: 'bg-emerald-500',
@@ -45,7 +45,7 @@ const summaryCards = [
     id: 'card-next',
     label: 'Next Payout',
     value: 'May 1, 2026',
-    sub: '₦35,600 expected',
+    sub: '₦10,680 expected',
     icon: Clock,
     color: 'bg-blue-500',
     iconColor: 'text-white',
@@ -58,9 +58,9 @@ const activePlans = [
     name: 'Basic Plan',
     shares: 4,
     invested: '₦35,600',
-    monthlyReturn: '₦17,800',
+    monthlyReturn: '₦5,340',
     startDate: 'Jan 1, 2026',
-    totalEarned: '₦35,600',
+    totalEarned: '₦5,340',
     status: 'Active',
   },
   {
@@ -68,18 +68,18 @@ const activePlans = [
     name: 'Standard Plan',
     shares: 4,
     invested: '₦35,600',
-    monthlyReturn: '₦17,800',
+    monthlyReturn: '₦5,340',
     startDate: 'Feb 1, 2026',
-    totalEarned: '₦17,800',
+    totalEarned: '₦5,340',
     status: 'Active',
   },
 ];
 
 const recentTransactions = [
-  { id: 'tx-1', type: 'Return',   description: 'Monthly return — Basic Plan',    amount: '+₦17,800', date: 'Apr 1, 2026',  status: 'Success', positive: true },
-  { id: 'tx-2', type: 'Withdraw', description: 'Withdrawal to GTBank',           amount: '-₦17,800', date: 'Mar 28, 2026', status: 'Success', positive: false },
-  { id: 'tx-3', type: 'Return',   description: 'Monthly return — Standard Plan', amount: '+₦17,800', date: 'Mar 1, 2026',  status: 'Success', positive: true },
-  { id: 'tx-4', type: 'Deposit',  description: 'Card deposit',                   amount: '+₦50,000', date: 'Feb 10, 2026', status: 'Success', positive: true },
+  { id: 'tx-1', type: 'Return',   description: 'Monthly return — Basic Plan',    amount: '+₦5,340',  date: 'Apr 1, 2026',  status: 'Success', positive: true  },
+  { id: 'tx-2', type: 'Withdraw', description: 'Withdrawal to GTBank',           amount: '-₦5,340',  date: 'Mar 28, 2026', status: 'Success', positive: false },
+  { id: 'tx-3', type: 'Return',   description: 'Monthly return — Standard Plan', amount: '+₦5,340',  date: 'Mar 1, 2026',  status: 'Success', positive: true  },
+  { id: 'tx-4', type: 'Deposit',  description: 'Card deposit',                   amount: '+₦50,000', date: 'Feb 10, 2026', status: 'Success', positive: true  },
   { id: 'tx-5', type: 'Invest',   description: 'Standard Plan — 4 shares',       amount: '-₦35,600', date: 'Feb 1, 2026',  status: 'Success', positive: false },
 ];
 
@@ -107,7 +107,7 @@ export default function DashboardHome() {
             {getHour()}, Chioma 👋
           </p>
           <h2 className="text-xl font-bold text-white">
-            Your portfolio is up ₦17,800 this month
+            Your portfolio is up ₦10,680 this month
           </h2>
           <p className="text-gray-400 text-sm mt-1">
             {new Date().toLocaleDateString('en-NG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}

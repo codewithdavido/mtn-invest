@@ -9,7 +9,7 @@ const testimonials = [
     role: 'Small Business Owner, Lagos',
     avatar: 'CO',
     rating: 5,
-    text: 'I started with the Basic plan — 4 shares. Every 1st of the month ₦17,800 lands in my wallet without me doing anything. I\'ve since upgraded to Standard. MTNInvest is the best financial decision I\'ve ever made.',
+    text: 'I started with the Basic plan — 4 shares. Every 1st of the month ₦5,340 lands in my wallet without me doing anything. I\'ve since upgraded to Standard. MTNInvest is the best financial decision I\'ve ever made.',
   },
   {
     id: 'test-2',
@@ -17,7 +17,7 @@ const testimonials = [
     role: 'Teacher, Enugu',
     avatar: 'EN',
     rating: 5,
-    text: 'I invested in the Premium plan and I receive ₦89,000 every month. That\'s more than my salary! The dashboard is clean, withdrawals are fast, and the team is responsive. I recommend this to everyone.',
+    text: 'I invested in the Premium plan and I receive ₦26,700 every month. The dashboard is clean, withdrawals are fast, and the team is responsive. The returns are consistent and I recommend this to everyone.',
   },
   {
     id: 'test-3',
@@ -25,7 +25,7 @@ const testimonials = [
     role: 'Nurse, Kaduna',
     avatar: 'FA',
     rating: 5,
-    text: 'I love how simple it is. I linked my card, topped up my wallet, picked the Standard plan and that was it. ₦44,500 every month, on time, every time. The withdrawal to my GTBank account takes less than 24 hours.',
+    text: 'I love how simple it is. I linked my card, topped up my wallet, picked the Standard plan and that was it. ₦13,350 every month, on time, every time. The withdrawal to my GTBank account takes less than 24 hours.',
   },
   {
     id: 'test-4',

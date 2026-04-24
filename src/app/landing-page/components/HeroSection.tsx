@@ -13,16 +13,16 @@ interface TrustBullet {
 
 const trustBullets: TrustBullet[] = [
   { IconComponent: ShieldCheck as IconComponent, text: 'PCIDSS Secure' },
-  { IconComponent: TrendingUp as IconComponent,  text: '50% Monthly Returns' },
+  { IconComponent: TrendingUp as IconComponent,  text: '15% Monthly Returns' },
   { IconComponent: CreditCard as IconComponent,  text: 'Link Any Debit Card' },
 ];
 
 const plans = [
-  { plan: 'Basic Plan',    shares: 4,  investment: '₦35,600',  monthly: '₦17,800',  badge: 'Starter'     },
-  { plan: 'Standard Plan', shares: 10, investment: '₦89,000',  monthly: '₦44,500',  badge: 'Popular'     },
-  { plan: 'Premium Plan',  shares: 20, investment: '₦178,000', monthly: '₦89,000',  badge: null          },
-  { plan: 'Elite Plan',    shares: 50, investment: '₦445,000', monthly: '₦222,500', badge: 'Best Returns' },
-  { plan: 'Custom Plan',   shares: 0,  investment: 'Your choice', monthly: '50% of investment', badge: 'Flexible' },
+  { plan: 'Basic Plan',    shares: 4,  investment: '₦35,600',    monthly: '₦5,340',   badge: 'Starter'     },
+  { plan: 'Standard Plan', shares: 10, investment: '₦89,000',    monthly: '₦13,350',  badge: 'Popular'     },
+  { plan: 'Premium Plan',  shares: 20, investment: '₦178,000',   monthly: '₦26,700',  badge: null          },
+  { plan: 'Elite Plan',    shares: 50, investment: '₦445,000',   monthly: '₦66,750',  badge: 'Best Returns' },
+  { plan: 'Custom Plan',   shares: 0,  investment: 'Your choice', monthly: '15% of investment', badge: 'Flexible' },
 ];
 
 export default function HeroSection() {
@@ -50,7 +50,7 @@ export default function HeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-mtn-yellow/10 border border-mtn-yellow/30 text-mtn-yellow rounded-full px-4 py-1.5 text-sm font-semibold mb-8">
             <span className="w-2 h-2 bg-mtn-yellow rounded-full animate-pulse" />
-            Earn 50% of your investment every month
+            Earn 15% of your investment every month
           </div>
 
           <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
@@ -59,7 +59,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-lg text-gray-300 leading-relaxed mb-8 max-w-lg">
-            MTNInvest gives you 50% of your investment as monthly returns — every 1st of the month, directly to your wallet.
+            MTNInvest gives you 15% of your investment as monthly returns — every 1st of the month, directly to your wallet.
             Link your card once and start earning. As little as ₦35,600 to get started.
           </p>
 

@@ -39,7 +39,7 @@ const summaryCards = [
   {
     id: 'card-returns',
     label: 'Returns Paid This Month',
-    value: '₦241,175,000',
+    value: '₦72,352,500',
     sub: 'April 2026',
     icon: CircleDollarSign,
     color: 'bg-emerald-500',
@@ -79,26 +79,26 @@ const summaryCards = [
 ];
 
 const recentInvestors = [
-  { id: 'inv-1', name: 'Chioma Okafor',   email: 'chioma@email.com',  plan: 'Standard', shares: 10, joined: 'Apr 18, 2026', status: 'Active' },
-  { id: 'inv-2', name: 'Emeka Nwosu',     email: 'emeka@email.com',   plan: 'Basic',    shares: 4,  joined: 'Apr 17, 2026', status: 'Active' },
-  { id: 'inv-3', name: 'Fatima Abdullahi',email: 'fatima@email.com',  plan: 'Elite',    shares: 50, joined: 'Apr 16, 2026', status: 'Active' },
-  { id: 'inv-4', name: 'Tunde Adeyemi',   email: 'tunde@email.com',   plan: 'Custom',   shares: 7,  joined: 'Apr 15, 2026', status: 'Active' },
-  { id: 'inv-5', name: 'Ngozi Eze',       email: 'ngozi@email.com',   plan: 'Premium',  shares: 20, joined: 'Apr 14, 2026', status: 'Active' },
+  { id: 'inv-1', name: 'Chioma Okafor',    email: 'chioma@email.com',  plan: 'Standard', shares: 10, joined: 'Apr 18, 2026', status: 'Active' },
+  { id: 'inv-2', name: 'Emeka Nwosu',      email: 'emeka@email.com',   plan: 'Basic',    shares: 4,  joined: 'Apr 17, 2026', status: 'Active' },
+  { id: 'inv-3', name: 'Fatima Abdullahi', email: 'fatima@email.com',  plan: 'Elite',    shares: 50, joined: 'Apr 16, 2026', status: 'Active' },
+  { id: 'inv-4', name: 'Tunde Adeyemi',    email: 'tunde@email.com',   plan: 'Custom',   shares: 7,  joined: 'Apr 15, 2026', status: 'Active' },
+  { id: 'inv-5', name: 'Ngozi Eze',        email: 'ngozi@email.com',   plan: 'Premium',  shares: 20, joined: 'Apr 14, 2026', status: 'Active' },
 ];
 
 const pendingWithdrawals = [
-  { id: 'wd-1', name: 'Chioma Okafor',    amount: '₦17,800', bank: 'GTBank',    date: 'Apr 19, 2026', status: 'Pending'    },
-  { id: 'wd-2', name: 'Emeka Nwosu',      amount: '₦17,800', bank: 'Zenith',    date: 'Apr 19, 2026', status: 'Pending'    },
-  { id: 'wd-3', name: 'Ngozi Eze',        amount: '₦89,000', bank: 'Access',    date: 'Apr 18, 2026', status: 'Processing' },
-  { id: 'wd-4', name: 'Tunde Adeyemi',    amount: '₦17,800', bank: 'First Bank',date: 'Apr 18, 2026', status: 'Pending'    },
+  { id: 'wd-1', name: 'Chioma Okafor',  amount: '₦5,340',  bank: 'GTBank',    date: 'Apr 19, 2026', status: 'Pending'    },
+  { id: 'wd-2', name: 'Emeka Nwosu',    amount: '₦5,340',  bank: 'Zenith',    date: 'Apr 19, 2026', status: 'Pending'    },
+  { id: 'wd-3', name: 'Ngozi Eze',      amount: '₦26,700', bank: 'Access',    date: 'Apr 18, 2026', status: 'Processing' },
+  { id: 'wd-4', name: 'Tunde Adeyemi',  amount: '₦5,340',  bank: 'First Bank',date: 'Apr 18, 2026', status: 'Pending'    },
 ];
 
 const recentTransactions = [
-  { id: 'tx-1', type: 'Return',     name: 'Chioma Okafor',    amount: '+₦17,800',  date: 'Apr 1, 2026',  positive: true  },
+  { id: 'tx-1', type: 'Return',     name: 'Chioma Okafor',    amount: '+₦13,350',  date: 'Apr 1, 2026',  positive: true  },
   { id: 'tx-2', type: 'Deposit',    name: 'Emeka Nwosu',      amount: '+₦50,000',  date: 'Apr 17, 2026', positive: true  },
   { id: 'tx-3', type: 'Investment', name: 'Fatima Abdullahi', amount: '-₦445,000', date: 'Apr 16, 2026', positive: false },
-  { id: 'tx-4', type: 'Withdrawal', name: 'Tunde Adeyemi',    amount: '-₦17,800',  date: 'Apr 15, 2026', positive: false },
-  { id: 'tx-5', type: 'Return',     name: 'Ngozi Eze',        amount: '+₦89,000',  date: 'Apr 1, 2026',  positive: true  },
+  { id: 'tx-4', type: 'Withdrawal', name: 'Tunde Adeyemi',    amount: '-₦5,340',   date: 'Apr 15, 2026', positive: false },
+  { id: 'tx-5', type: 'Return',     name: 'Ngozi Eze',        amount: '+₦26,700',  date: 'Apr 1, 2026',  positive: true  },
 ];
 
 export default function AdminDashboard() {
@@ -160,10 +160,7 @@ export default function AdminDashboard() {
               <Users size={18} className="text-blue-500" />
               <h3 className="text-sm font-bold text-gray-900">Recent Investors</h3>
             </div>
-            <Link
-              href="/admin-panel/investors"
-              className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1"
-            >
+            <Link href="/admin-panel/investors" className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1">
               View all <ChevronRight size={12} />
             </Link>
           </div>
@@ -172,18 +169,14 @@ export default function AdminDashboard() {
               <div key={inv.id} className="px-6 py-3.5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-mtn-yellow flex items-center justify-center shrink-0">
-                    <span className="text-xs font-bold text-black">
-                      {inv.name.split(' ').map(n => n[0]).join('')}
-                    </span>
+                    <span className="text-xs font-bold text-black">{inv.name.split(' ').map(n => n[0]).join('')}</span>
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-gray-900">{inv.name}</p>
                     <p className="text-xs text-gray-400">{inv.plan} · {inv.shares} shares · {inv.joined}</p>
                   </div>
                 </div>
-                <span className="text-xs font-semibold bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full">
-                  {inv.status}
-                </span>
+                <span className="text-xs font-semibold bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full">{inv.status}</span>
               </div>
             ))}
           </div>
@@ -196,10 +189,7 @@ export default function AdminDashboard() {
               <AlertCircle size={18} className="text-orange-500" />
               <h3 className="text-sm font-bold text-gray-900">Pending Withdrawals</h3>
             </div>
-            <Link
-              href="/admin-panel/withdrawals"
-              className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1"
-            >
+            <Link href="/admin-panel/withdrawals" className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1">
               View all <ChevronRight size={12} />
             </Link>
           </div>
@@ -212,17 +202,13 @@ export default function AdminDashboard() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-bold text-gray-900">{wd.amount}</p>
-                  <span className={`text-xs font-semibold ${
-                    wd.status === 'Processing' ? 'text-blue-500' : 'text-orange-500'
-                  }`}>
+                  <span className={`text-xs font-semibold ${wd.status === 'Processing' ? 'text-blue-500' : 'text-orange-500'}`}>
                     {wd.status}
                   </span>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Quick approve all button */}
           <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
             <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500 text-white text-sm font-bold hover:bg-emerald-600 transition-all duration-150">
               <CheckCircle2 size={16} />
@@ -239,10 +225,7 @@ export default function AdminDashboard() {
             <Clock size={18} className="text-mtn-yellow-dark" />
             <h3 className="text-sm font-bold text-gray-900">Recent Transactions</h3>
           </div>
-          <Link
-            href="/admin-panel/transactions"
-            className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1"
-          >
+          <Link href="/admin-panel/transactions" className="text-xs font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-1">
             View all <ChevronRight size={12} />
           </Link>
         </div>
@@ -250,9 +233,7 @@ export default function AdminDashboard() {
           {recentTransactions.map(tx => (
             <div key={tx.id} className="px-6 py-3.5 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                  tx.positive ? 'bg-emerald-50' : 'bg-red-50'
-                }`}>
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${tx.positive ? 'bg-emerald-50' : 'bg-red-50'}`}>
                   {tx.positive
                     ? <ArrowDownLeft size={16} className="text-emerald-500" />
                     : <ArrowUpRight size={16} className="text-red-400" />
@@ -274,7 +255,6 @@ export default function AdminDashboard() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }

@@ -41,7 +41,7 @@ const steps: Step[] = [
     number: '04',
     IconComponent: Banknote as IconComponent,
     title: 'Collect Your Monthly Returns',
-    description: 'Every 1st of the month, 50% of your investment is credited to your wallet. Withdraw to your bank account anytime after.',
+    description: 'Every 1st of the month, 15% of your investment is credited to your wallet. Withdraw to your bank account anytime after.',
   },
 ];
 

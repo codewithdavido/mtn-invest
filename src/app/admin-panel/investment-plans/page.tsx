@@ -33,20 +33,20 @@ const tierIcons: Record<string, React.ElementType> = {
 };
 
 const tierSummary = [
-  { tier: 'Basic',    investors: 412, totalShares: 1648,  totalInvested: '₦14,667,200',  monthlyPayout: '₦7,333,600'  },
-  { tier: 'Standard', investors: 389, totalShares: 3890,  totalInvested: '₦34,621,000',  monthlyPayout: '₦17,310,500' },
-  { tier: 'Premium',  investors: 201, totalShares: 4020,  totalInvested: '₦35,778,000',  monthlyPayout: '₦17,889,000' },
-  { tier: 'Elite',    investors: 98,  totalShares: 4900,  totalInvested: '₦43,610,000',  monthlyPayout: '₦21,805,000' },
-  { tier: 'Custom',   investors: 147, totalShares: 1323,  totalInvested: '₦11,774,700',  monthlyPayout: '₦5,887,350'  },
+  { tier: 'Basic',    investors: 412, totalShares: 1648,  totalInvested: '₦14,667,200',  monthlyPayout: '₦2,200,080'  },
+  { tier: 'Standard', investors: 389, totalShares: 3890,  totalInvested: '₦34,621,000',  monthlyPayout: '₦5,193,150'  },
+  { tier: 'Premium',  investors: 201, totalShares: 4020,  totalInvested: '₦35,778,000',  monthlyPayout: '₦5,366,700'  },
+  { tier: 'Elite',    investors: 98,  totalShares: 4900,  totalInvested: '₦43,610,000',  monthlyPayout: '₦6,541,500'  },
+  { tier: 'Custom',   investors: 147, totalShares: 1323,  totalInvested: '₦11,774,700',  monthlyPayout: '₦1,766,205'  },
 ];
 
 const activePlans = [
-  { id: 'plan-1', investor: 'Chioma Okafor',    email: 'chioma@email.com',  phone: '08012345678', tier: 'Standard', shares: 10, invested: '₦89,000',  monthlyReturn: '₦44,500',  startDate: 'Jan 1, 2026',  totalEarned: '₦89,000',  status: 'Active' },
-  { id: 'plan-2', investor: 'Emeka Nwosu',      email: 'emeka@email.com',   phone: '08023456789', tier: 'Basic',    shares: 4,  invested: '₦35,600',  monthlyReturn: '₦17,800',  startDate: 'Feb 1, 2026',  totalEarned: '₦35,600',  status: 'Active' },
-  { id: 'plan-3', investor: 'Fatima Abdullahi', email: 'fatima@email.com',  phone: '08034567890', tier: 'Elite',    shares: 50, invested: '₦445,000', monthlyReturn: '₦222,500', startDate: 'Apr 1, 2026',  totalEarned: '₦222,500', status: 'Active' },
-  { id: 'plan-4', investor: 'Tunde Adeyemi',    email: 'tunde@email.com',   phone: '08045678901', tier: 'Custom',   shares: 7,  invested: '₦62,300',  monthlyReturn: '₦31,150',  startDate: 'Jan 15, 2026', totalEarned: '₦62,300',  status: 'Active' },
-  { id: 'plan-5', investor: 'Ngozi Eze',        email: 'ngozi@email.com',   phone: '08056789012', tier: 'Premium',  shares: 20, invested: '₦178,000', monthlyReturn: '₦89,000',  startDate: 'Mar 1, 2026',  totalEarned: '₦178,000', status: 'Active' },
-  { id: 'plan-6', investor: 'Bola Adesanya',    email: 'bola@email.com',    phone: '08067890123', tier: 'Basic',    shares: 4,  invested: '₦35,600',  monthlyReturn: '₦17,800',  startDate: 'Dec 1, 2025',  totalEarned: '₦53,400',  status: 'Active' },
+  { id: 'plan-1', investor: 'Chioma Okafor',    email: 'chioma@email.com',  phone: '08012345678', tier: 'Standard', shares: 10, invested: '₦89,000',  monthlyReturn: '₦13,350', startDate: 'Jan 1, 2026',  totalEarned: '₦40,050', status: 'Active' },
+  { id: 'plan-2', investor: 'Emeka Nwosu',      email: 'emeka@email.com',   phone: '08023456789', tier: 'Basic',    shares: 4,  invested: '₦35,600',  monthlyReturn: '₦5,340',  startDate: 'Feb 1, 2026',  totalEarned: '₦16,020', status: 'Active' },
+  { id: 'plan-3', investor: 'Fatima Abdullahi', email: 'fatima@email.com',  phone: '08034567890', tier: 'Elite',    shares: 50, invested: '₦445,000', monthlyReturn: '₦66,750', startDate: 'Apr 1, 2026',  totalEarned: '₦66,750', status: 'Active' },
+  { id: 'plan-4', investor: 'Tunde Adeyemi',    email: 'tunde@email.com',   phone: '08045678901', tier: 'Custom',   shares: 7,  invested: '₦62,300',  monthlyReturn: '₦9,345',  startDate: 'Jan 15, 2026', totalEarned: '₦28,035', status: 'Active' },
+  { id: 'plan-5', investor: 'Ngozi Eze',        email: 'ngozi@email.com',   phone: '08056789012', tier: 'Premium',  shares: 20, invested: '₦178,000', monthlyReturn: '₦26,700', startDate: 'Mar 1, 2026',  totalEarned: '₦53,400', status: 'Active' },
+  { id: 'plan-6', investor: 'Bola Adesanya',    email: 'bola@email.com',    phone: '08067890123', tier: 'Basic',    shares: 4,  invested: '₦35,600',  monthlyReturn: '₦5,340',  startDate: 'Dec 1, 2025',  totalEarned: '₦26,700', status: 'Active' },
 ];
 
 export default function InvestmentPlansPage() {
@@ -98,10 +98,10 @@ export default function InvestmentPlansPage() {
       {/* Overall stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Total Active Plans',   value: activePlans.length.toString(),                                   color: 'bg-blue-500'    },
-          { label: 'Total Shares Held',    value: tierSummary.reduce((s, t) => s + t.totalShares, 0).toLocaleString(), color: 'bg-gray-900'    },
-          { label: 'Total Invested',       value: '₦140,450,900',                                                  color: 'bg-mtn-yellow'  },
-          { label: 'Total Monthly Payout', value: '₦70,225,450',                                                   color: 'bg-emerald-500' },
+          { label: 'Total Active Plans',   value: activePlans.length.toString(), color: 'bg-blue-500'    },
+          { label: 'Total Shares Held',    value: tierSummary.reduce((s, t) => s + t.totalShares, 0).toLocaleString(), color: 'bg-gray-900' },
+          { label: 'Total Invested',       value: '₦140,450,900',                color: 'bg-mtn-yellow'  },
+          { label: 'Total Monthly Payout', value: '₦21,067,635',                 color: 'bg-emerald-500' },
         ].map((s, i) => (
           <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-4">
             <div className={`w-3 h-12 rounded-full ${s.color} shrink-0`} />
@@ -152,17 +152,13 @@ export default function InvestmentPlansPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-mtn-yellow flex items-center justify-center shrink-0">
-                        <span className="text-xs font-bold text-black">
-                          {plan.investor.split(' ').map(n => n[0]).join('')}
-                        </span>
+                        <span className="text-xs font-bold text-black">{plan.investor.split(' ').map(n => n[0]).join('')}</span>
                       </div>
                       <p className="text-sm font-semibold text-gray-900">{plan.investor}</p>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tierColors[plan.tier]}`}>
-                      {plan.tier}
-                    </span>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${tierColors[plan.tier]}`}>{plan.tier}</span>
                   </td>
                   <td className="px-6 py-4 text-sm font-semibold text-gray-900">{plan.shares}</td>
                   <td className="px-6 py-4 text-sm font-semibold text-gray-900">{plan.invested}</td>
@@ -213,10 +209,10 @@ export default function InvestmentPlansPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'Shares',         value: selectedPlan.shares.toString() },
-                  { label: 'Invested',        value: selectedPlan.invested          },
-                  { label: 'Monthly Return',  value: selectedPlan.monthlyReturn     },
-                  { label: 'Total Earned',    value: selectedPlan.totalEarned       },
+                  { label: 'Shares',        value: selectedPlan.shares.toString() },
+                  { label: 'Invested',      value: selectedPlan.invested          },
+                  { label: 'Monthly Return',value: selectedPlan.monthlyReturn     },
+                  { label: 'Total Earned',  value: selectedPlan.totalEarned       },
                 ].map((item, i) => (
                   <div key={i} className="bg-gray-50 rounded-xl p-3">
                     <p className="text-xs text-gray-400 mb-1">{item.label}</p>

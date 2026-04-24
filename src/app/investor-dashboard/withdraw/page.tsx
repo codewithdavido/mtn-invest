@@ -20,14 +20,14 @@ const linkedBank = {
 };
 
 const recentWithdrawals = [
-  { id: 'wd-1', amount: '₦17,800', date: 'Mar 28, 2026', status: 'Processed' },
-  { id: 'wd-2', amount: '₦17,800', date: 'Feb 25, 2026', status: 'Processed' },
-  { id: 'wd-3', amount: '₦17,800', date: 'Jan 20, 2026', status: 'Processed' },
-  { id: 'wd-4', amount: '₦17,800', date: 'Dec 18, 2025', status: 'Pending'   },
-  { id: 'wd-5', amount: '₦17,800', date: 'Nov 10, 2025', status: 'Processed' },
+  { id: 'wd-1', amount: '₦5,340', date: 'Mar 28, 2026', status: 'Processed' },
+  { id: 'wd-2', amount: '₦5,340', date: 'Feb 25, 2026', status: 'Processed' },
+  { id: 'wd-3', amount: '₦5,340', date: 'Jan 20, 2026', status: 'Processed' },
+  { id: 'wd-4', amount: '₦5,340', date: 'Dec 18, 2025', status: 'Pending'   },
+  { id: 'wd-5', amount: '₦5,340', date: 'Nov 10, 2025', status: 'Processed' },
 ];
 
-const MINIMUM_WITHDRAWAL = 17800;
+const MINIMUM_WITHDRAWAL = 5340;
 const WALLET_BALANCE = 45000;
 
 function formatNaira(amount: number) {
@@ -69,7 +69,6 @@ export default function WithdrawPage() {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
       await new Promise(res => setTimeout(res, 1500));
       setSuccessMessage(`₦${amount} withdrawal is being processed to your ${linkedBank.bankName} account. You'll receive it within 24 hours.`);
       setAmount('');
@@ -257,9 +256,7 @@ export default function WithdrawPage() {
               <div className="text-right">
                 <p className="text-sm font-bold text-gray-900">{wd.amount}</p>
                 <span className={`text-xs font-semibold ${
-                  wd.status === 'Processed'
-                    ? 'text-emerald-500'
-                    : 'text-orange-500'
+                  wd.status === 'Processed' ? 'text-emerald-500' : 'text-orange-500'
                 }`}>
                   {wd.status}
                 </span>

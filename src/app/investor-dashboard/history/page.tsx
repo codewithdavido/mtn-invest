@@ -21,8 +21,8 @@ const summaryCards = [
   {
     id: 'sc-invested',
     label: 'Total Invested',
-    value: '₦71,200',
-    sub: '8 shares',
+    value: '₦124,600',
+    sub: '14 shares',
     icon: TrendingUp,
     color: 'bg-gray-900',
     iconColor: 'text-mtn-yellow',
@@ -30,7 +30,7 @@ const summaryCards = [
   {
     id: 'sc-returns',
     label: 'Total Returns Earned',
-    value: '₦53,400',
+    value: '₦28,305',
     sub: 'All time',
     icon: CircleDollarSign,
     color: 'bg-emerald-500',
@@ -39,7 +39,7 @@ const summaryCards = [
   {
     id: 'sc-withdrawn',
     label: 'Total Withdrawn',
-    value: '₦35,600',
+    value: '₦10,680',
     sub: 'All time',
     icon: Wallet,
     color: 'bg-blue-500',
@@ -62,47 +62,48 @@ const activePlans = [
     name: 'Basic Plan',
     shares: 4,
     invested: '₦35,600',
-    monthlyReturn: '₦17,800',
+    monthlyReturn: '₦5,340',
     startDate: 'Jan 1, 2026',
-    totalEarned: '₦35,600',
+    totalEarned: '₦16,020',
     status: 'Active',
   },
   {
     id: 'plan-2',
     name: 'Standard Plan',
-    shares: 4,
-    invested: '₦35,600',
-    monthlyReturn: '₦17,800',
+    shares: 10,
+    invested: '₦89,000',
+    monthlyReturn: '₦13,350',
     startDate: 'Feb 1, 2026',
-    totalEarned: '₦17,800',
+    totalEarned: '₦13,350',
     status: 'Active',
   },
 ];
 
 const transactions = [
-  { id: 'tx-1', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦17,800', date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
-  { id: 'tx-2', type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦17,800', date: 'Mar 28, 2026', status: 'Processed', positive: false },
-  { id: 'tx-3', type: 'Return',     description: 'Monthly return — Standard Plan', amount: '+₦17,800', date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
-  { id: 'tx-4', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦17,800', date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
-  { id: 'tx-5', type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦17,800', date: 'Feb 25, 2026', status: 'Processed', positive: false },
-  { id: 'tx-6', type: 'Investment', description: 'Standard Plan — 4 shares',       amount: '-₦35,600', date: 'Feb 1, 2026',  status: 'Success',   positive: false },
-  { id: 'tx-7', type: 'Deposit',    description: 'Card deposit',                   amount: '+₦50,000', date: 'Feb 10, 2026', status: 'Success',   positive: true  },
-  { id: 'tx-8', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦17,800', date: 'Feb 1, 2026',  status: 'Success',   positive: true  },
-  { id: 'tx-9', type: 'Investment', description: 'Basic Plan — 4 shares',          amount: '-₦35,600', date: 'Jan 1, 2026',  status: 'Success',   positive: false },
-  { id: 'tx-10', type: 'Deposit',   description: 'Card deposit',                   amount: '+₦50,000', date: 'Jan 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-1', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦5,340',  date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-2', type: 'Return',     description: 'Monthly return — Standard Plan', amount: '+₦13,350', date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-3', type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦5,340',  date: 'Mar 28, 2026', status: 'Processed', positive: false },
+  { id: 'tx-4', type: 'Return',     description: 'Monthly return — Standard Plan', amount: '+₦13,350', date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-5', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦5,340',  date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-6', type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦5,340',  date: 'Feb 25, 2026', status: 'Processed', positive: false },
+  { id: 'tx-7', type: 'Investment', description: 'Standard Plan — 10 shares',      amount: '-₦89,000', date: 'Feb 1, 2026',  status: 'Success',   positive: false },
+  { id: 'tx-8', type: 'Deposit',    description: 'Card deposit',                   amount: '+₦50,000', date: 'Feb 10, 2026', status: 'Success',   positive: true  },
+  { id: 'tx-9', type: 'Return',     description: 'Monthly return — Basic Plan',    amount: '+₦5,340',  date: 'Feb 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-10', type: 'Investment', description: 'Basic Plan — 4 shares',         amount: '-₦35,600', date: 'Jan 1, 2026',  status: 'Success',   positive: false },
+  { id: 'tx-11', type: 'Deposit',   description: 'Card deposit',                   amount: '+₦50,000', date: 'Jan 1, 2026',  status: 'Success',   positive: true  },
 ];
 
 const monthlyReturns = [
-  { id: 'mr-1', month: 'April 2026',    amount: '₦35,600', plans: 2, date: 'Apr 1, 2026',  status: 'Credited' },
-  { id: 'mr-2', month: 'March 2026',    amount: '₦35,600', plans: 2, date: 'Mar 1, 2026',  status: 'Credited' },
-  { id: 'mr-3', month: 'February 2026', amount: '₦17,800', plans: 1, date: 'Feb 1, 2026',  status: 'Credited' },
-  { id: 'mr-4', month: 'May 2026',      amount: '₦35,600', plans: 2, date: 'May 1, 2026',  status: 'Upcoming' },
+  { id: 'mr-1', month: 'April 2026',    amount: '₦18,690', plans: 2, date: 'Apr 1, 2026', status: 'Credited' },
+  { id: 'mr-2', month: 'March 2026',    amount: '₦18,690', plans: 2, date: 'Mar 1, 2026', status: 'Credited' },
+  { id: 'mr-3', month: 'February 2026', amount: '₦5,340',  plans: 1, date: 'Feb 1, 2026', status: 'Credited' },
+  { id: 'mr-4', month: 'May 2026',      amount: '₦18,690', plans: 2, date: 'May 1, 2026', status: 'Upcoming' },
 ];
 
 const tabs = [
-  { id: 'active' as TabId,       label: 'Active Investments', icon: TrendingUp    },
-  { id: 'transactions' as TabId, label: 'Transactions',       icon: History       },
-  { id: 'returns' as TabId,      label: 'Monthly Returns',    icon: Calendar      },
+  { id: 'active' as TabId,       label: 'Active Investments', icon: TrendingUp },
+  { id: 'transactions' as TabId, label: 'Transactions',       icon: History    },
+  { id: 'returns' as TabId,      label: 'Monthly Returns',    icon: Calendar   },
 ];
 
 const txFilters: TransactionType[] = ['All', 'Deposit', 'Withdrawal', 'Return', 'Investment'];
@@ -174,8 +175,6 @@ export default function HistoryPage() {
         ))}
       </div>
 
-      {/* Tab content */}
-
       {/* Active Investments */}
       {activeTab === 'active' && (
         <div className="space-y-4">
@@ -216,7 +215,6 @@ export default function HistoryPage() {
       {/* Transactions */}
       {activeTab === 'transactions' && (
         <div className="space-y-4">
-          {/* Filters */}
           <div className="flex flex-wrap gap-2">
             {txFilters.map(filter => (
               <button
@@ -233,7 +231,6 @@ export default function HistoryPage() {
             ))}
           </div>
 
-          {/* Transaction list */}
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
             <div className="divide-y divide-gray-50">
               {filteredTx.map(tx => (

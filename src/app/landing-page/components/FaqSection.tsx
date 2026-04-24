@@ -6,7 +6,7 @@ const faqs = [
   {
     id: "faq-1",
     q: "How does the MTNInvest investment model work?",
-    a: "You purchase shares at ₦8,900 each — minimum 4 shares. Every 1st of the month, you receive 50% of your total investment as a return, credited directly to your MTNInvest wallet. For example, if you invest ₦35,600 (4 shares), you receive ₦17,800 every month.",
+    a: "You purchase shares at ₦8,900 each — minimum 4 shares. Every 1st of the month, you receive 15% of your total investment as a return, credited directly to your MTNInvest wallet. For example, if you invest ₦35,600 (4 shares), you receive ₦5,340 every month.",
   },
   {
     id: "faq-2",
@@ -21,7 +21,7 @@ const faqs = [
   {
     id: "faq-4",
     q: "Can I get my capital back after investing?",
-    a: "No — once you invest, your capital is permanently locked in. This is what enables us to offer the high monthly returns. Your earnings (50% monthly) continue to be paid out indefinitely as long as your investment is active.",
+    a: "No — once you invest, your capital is permanently locked in. This is what enables us to offer consistent monthly returns. Your earnings (15% monthly) continue to be paid out indefinitely as long as your investment is active.",
   },
   {
     id: "faq-5",
@@ -31,7 +31,7 @@ const faqs = [
   {
     id: "faq-6",
     q: "How do I withdraw my returns?",
-    a: "After your returns are credited on the 1st of the month, you can withdraw from your wallet to your linked Nigerian bank account at any time. Minimum withdrawal is ₦17,800 and you can withdraw once per month. Withdrawals are processed within 24 hours.",
+    a: "After your returns are credited on the 1st of the month, you can withdraw from your wallet to your linked Nigerian bank account at any time. Minimum withdrawal is ₦5,340 and you can withdraw once per month. Withdrawals are processed within 24 hours.",
   },
   {
     id: "faq-7",

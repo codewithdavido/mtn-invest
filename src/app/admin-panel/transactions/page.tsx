@@ -15,16 +15,16 @@ import {
 type TxType = 'All' | 'Deposit' | 'Withdrawal' | 'Return' | 'Investment';
 
 const transactions = [
-  { id: 'tx-1',  name: 'Chioma Okafor',    type: 'Return',     description: 'Monthly return — Standard Plan', amount: '+₦44,500',  date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-1',  name: 'Chioma Okafor',    type: 'Return',     description: 'Monthly return — Standard Plan', amount: '+₦13,350',  date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
   { id: 'tx-2',  name: 'Emeka Nwosu',      type: 'Deposit',    description: 'Card deposit',                   amount: '+₦50,000',  date: 'Apr 17, 2026', status: 'Success',   positive: true  },
   { id: 'tx-3',  name: 'Fatima Abdullahi', type: 'Investment', description: 'Elite Plan — 50 shares',         amount: '-₦445,000', date: 'Apr 1, 2026',  status: 'Success',   positive: false },
-  { id: 'tx-4',  name: 'Tunde Adeyemi',    type: 'Withdrawal', description: 'Withdrawal to First Bank',       amount: '-₦31,150',  date: 'Apr 4, 2026',  status: 'Processed', positive: false },
-  { id: 'tx-5',  name: 'Ngozi Eze',        type: 'Return',     description: 'Monthly return — Premium Plan',  amount: '+₦89,000',  date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-4',  name: 'Tunde Adeyemi',    type: 'Withdrawal', description: 'Withdrawal to First Bank',       amount: '-₦9,345',   date: 'Apr 4, 2026',  status: 'Processed', positive: false },
+  { id: 'tx-5',  name: 'Ngozi Eze',        type: 'Return',     description: 'Monthly return — Premium Plan',  amount: '+₦26,700',  date: 'Apr 1, 2026',  status: 'Success',   positive: true  },
   { id: 'tx-6',  name: 'Bola Adesanya',    type: 'Deposit',    description: 'Card deposit',                   amount: '+₦20,000',  date: 'Apr 15, 2026', status: 'Success',   positive: true  },
-  { id: 'tx-7',  name: 'Chioma Okafor',    type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦44,500',  date: 'Mar 28, 2026', status: 'Processed', positive: false },
+  { id: 'tx-7',  name: 'Chioma Okafor',    type: 'Withdrawal', description: 'Withdrawal to GTBank',           amount: '-₦13,350',  date: 'Mar 28, 2026', status: 'Processed', positive: false },
   { id: 'tx-8',  name: 'Emeka Nwosu',      type: 'Investment', description: 'Basic Plan — 4 shares',          amount: '-₦35,600',  date: 'Feb 1, 2026',  status: 'Success',   positive: false },
   { id: 'tx-9',  name: 'Ngozi Eze',        type: 'Deposit',    description: 'Card deposit',                   amount: '+₦200,000', date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
-  { id: 'tx-10', name: 'Tunde Adeyemi',    type: 'Return',     description: 'Monthly return — Custom Plan',   amount: '+₦31,150',  date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
+  { id: 'tx-10', name: 'Tunde Adeyemi',    type: 'Return',     description: 'Monthly return — Custom Plan',   amount: '+₦9,345',   date: 'Mar 1, 2026',  status: 'Success',   positive: true  },
 ];
 
 const txIcons: Record<string, React.ElementType> = {

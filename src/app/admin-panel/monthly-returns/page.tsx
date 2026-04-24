@@ -19,12 +19,12 @@ const returnHistory = [
 ];
 
 const investorReturns = [
-  { id: 'ir-1', name: 'Chioma Okafor',    plan: 'Standard', shares: 10, amount: '₦44,500',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-2', name: 'Emeka Nwosu',      plan: 'Basic',    shares: 4,  amount: '₦17,800',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-3', name: 'Fatima Abdullahi', plan: 'Elite',    shares: 50, amount: '₦222,500', status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-4', name: 'Tunde Adeyemi',    plan: 'Custom',   shares: 7,  amount: '₦31,150',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-5', name: 'Ngozi Eze',        plan: 'Premium',  shares: 20, amount: '₦89,000',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-6', name: 'Bola Adesanya',    plan: 'Basic',    shares: 4,  amount: '₦17,800',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-1', name: 'Chioma Okafor',    plan: 'Standard', shares: 10, amount: '₦13,350',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-2', name: 'Emeka Nwosu',      plan: 'Basic',    shares: 4,  amount: '₦5,340',   status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-3', name: 'Fatima Abdullahi', plan: 'Elite',    shares: 50, amount: '₦66,750',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-4', name: 'Tunde Adeyemi',    plan: 'Custom',   shares: 7,  amount: '₦9,345',   status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-5', name: 'Ngozi Eze',        plan: 'Premium',  shares: 20, amount: '₦26,700',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-6', name: 'Bola Adesanya',    plan: 'Basic',    shares: 4,  amount: '₦5,340',   status: 'Credited', date: 'Apr 1, 2026' },
 ];
 
 export default function MonthlyReturnsPage() {

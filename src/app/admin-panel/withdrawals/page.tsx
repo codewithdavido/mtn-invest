@@ -17,13 +17,13 @@ import {
 type StatusFilter = 'All' | 'Pending' | 'Processing' | 'Processed' | 'Failed';
 
 const withdrawals = [
-  { id: 'wd-1',  name: 'Chioma Okafor',    email: 'chioma@email.com',  amount: '₦17,800',  bank: 'GTBank',     accNo: '0123456789', date: 'Apr 19, 2026', status: 'Pending'    },
-  { id: 'wd-2',  name: 'Emeka Nwosu',      email: 'emeka@email.com',   amount: '₦17,800',  bank: 'Zenith',     accNo: '0987654321', date: 'Apr 19, 2026', status: 'Pending'    },
-  { id: 'wd-3',  name: 'Ngozi Eze',        email: 'ngozi@email.com',   amount: '₦89,000',  bank: 'Access',     accNo: '1122334455', date: 'Apr 18, 2026', status: 'Processing' },
-  { id: 'wd-4',  name: 'Tunde Adeyemi',    email: 'tunde@email.com',   amount: '₦17,800',  bank: 'First Bank', accNo: '2233445566', date: 'Apr 18, 2026', status: 'Pending'    },
-  { id: 'wd-5',  name: 'Fatima Abdullahi', email: 'fatima@email.com',  amount: '₦222,500', bank: 'Access',     accNo: '3344556677', date: 'Apr 17, 2026', status: 'Processed'  },
-  { id: 'wd-6',  name: 'Bola Adesanya',    email: 'bola@email.com',    amount: '₦17,800',  bank: 'Fidelity',   accNo: '4455667788', date: 'Apr 17, 2026', status: 'Processed'  },
-  { id: 'wd-7',  name: 'Chioma Okafor',    email: 'chioma@email.com',  amount: '₦44,500',  bank: 'GTBank',     accNo: '0123456789', date: 'Apr 16, 2026', status: 'Failed'     },
+  { id: 'wd-1',  name: 'Chioma Okafor',    email: 'chioma@email.com',  amount: '₦5,340',   bank: 'GTBank',     accNo: '0123456789', date: 'Apr 19, 2026', status: 'Pending'    },
+  { id: 'wd-2',  name: 'Emeka Nwosu',      email: 'emeka@email.com',   amount: '₦5,340',   bank: 'Zenith',     accNo: '0987654321', date: 'Apr 19, 2026', status: 'Pending'    },
+  { id: 'wd-3',  name: 'Ngozi Eze',        email: 'ngozi@email.com',   amount: '₦26,700',  bank: 'Access',     accNo: '1122334455', date: 'Apr 18, 2026', status: 'Processing' },
+  { id: 'wd-4',  name: 'Tunde Adeyemi',    email: 'tunde@email.com',   amount: '₦5,340',   bank: 'First Bank', accNo: '2233445566', date: 'Apr 18, 2026', status: 'Pending'    },
+  { id: 'wd-5',  name: 'Fatima Abdullahi', email: 'fatima@email.com',  amount: '₦66,750',  bank: 'Access',     accNo: '3344556677', date: 'Apr 17, 2026', status: 'Processed'  },
+  { id: 'wd-6',  name: 'Bola Adesanya',    email: 'bola@email.com',    amount: '₦5,340',   bank: 'Fidelity',   accNo: '4455667788', date: 'Apr 17, 2026', status: 'Processed'  },
+  { id: 'wd-7',  name: 'Chioma Okafor',    email: 'chioma@email.com',  amount: '₦13,350',  bank: 'GTBank',     accNo: '0123456789', date: 'Apr 16, 2026', status: 'Failed'     },
 ];
 
 const statusConfig: Record<string, { color: string; icon: React.ElementType }> = {
