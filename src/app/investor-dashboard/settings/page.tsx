@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   User,
   Lock,
@@ -15,6 +15,16 @@ import {
   Save,
   AlertTriangle,
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import {
+  getUserProfile,
+  updateProfile,
+  changePassword,
+  saveBankAccount,
+  removeBankAccount,
+  deleteAccount,
+} from '@/lib/auth';
 
 type SectionId = 'profile' | 'security' | 'bank' | 'card' | 'danger';
 
@@ -27,14 +37,12 @@ const sections = [
 ];
 
 export default function SettingsPage() {
+  const { user } = useAuth();
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState<SectionId>('profile');
 
   // Profile state
-  const [profile, setProfile] = useState({
-    fullName: 'Chioma Okafor',
-    email: 'chioma@email.com',
-    phone: '08012345678',
-  });
+  const [profile, setProfile] = useState({ fullName: '', email: '', phone: '' });
   const [profileSuccess, setProfileSuccess] = useState('');
   const [profileLoading, setProfileLoading] = useState(false);
 
@@ -48,9 +56,12 @@ export default function SettingsPage() {
   const [securityLoading, setSecurityLoading] = useState(false);
 
   // Bank state
-  const [hasBank, setHasBank] = useState(true);
-  const [bank] = useState({ bankName: 'GTBank', accountNumber: '0123456789', accountName: 'Chioma Okafor' });
+  const [hasBank, setHasBank] = useState(false);
+  const [bank, setBank] = useState({ bankName: '', accountNumber: '', accountName: '' });
+  const [newBank, setNewBank] = useState({ bankName: '', accountNumber: '', accountName: '' });
   const [bankSuccess, setBankSuccess] = useState('');
+  const [bankError, setBankError] = useState('');
+  const [bankLoading, setBankLoading] = useState(false);
 
   // Card state
   const [hasCard, setHasCard] = useState(true);
@@ -59,13 +70,43 @@ export default function SettingsPage() {
   // Danger zone state
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+
+  // Load real user profile
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user.uid).then((data) => {
+        if (data) {
+          setProfile({
+            fullName: data.fullName || '',
+            email: data.email || user.email || '',
+            phone: data.phone || '',
+          });
+          if (data.bankAccount) {
+            setBank(data.bankAccount);
+            setHasBank(true);
+          }
+        }
+      });
+    }
+  }, [user]);
 
   const handleProfileSave = async () => {
+    if (!user) return;
     setProfileLoading(true);
-    await new Promise(res => setTimeout(res, 1200));
-    setProfileSuccess('Profile updated successfully!');
-    setProfileLoading(false);
-    setTimeout(() => setProfileSuccess(''), 3000);
+    try {
+      await updateProfile(user.uid, {
+        fullName: profile.fullName,
+        phone: profile.phone,
+      });
+      setProfileSuccess('Profile updated successfully!');
+      setTimeout(() => setProfileSuccess(''), 3000);
+    } catch {
+      setProfileSuccess('');
+    } finally {
+      setProfileLoading(false);
+    }
   };
 
   const handlePasswordChange = async () => {
@@ -75,12 +116,73 @@ export default function SettingsPage() {
     if (!passwords.newPass) { setSecurityError('New password is required'); return; }
     if (passwords.newPass.length < 8) { setSecurityError('Password must be at least 8 characters'); return; }
     if (passwords.newPass !== passwords.confirm) { setSecurityError('Passwords do not match'); return; }
+
     setSecurityLoading(true);
-    await new Promise(res => setTimeout(res, 1200));
-    setSecuritySuccess('Password changed successfully!');
-    setPasswords({ current: '', newPass: '', confirm: '' });
-    setSecurityLoading(false);
-    setTimeout(() => setSecuritySuccess(''), 3000);
+    try {
+      await changePassword(passwords.current, passwords.newPass);
+      setSecuritySuccess('Password changed successfully!');
+      setPasswords({ current: '', newPass: '', confirm: '' });
+      setTimeout(() => setSecuritySuccess(''), 3000);
+    } catch (error: any) {
+      if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        setSecurityError('Current password is incorrect');
+      } else {
+        setSecurityError('Failed to change password. Please try again.');
+      }
+    } finally {
+      setSecurityLoading(false);
+    }
+  };
+
+  const handleSaveBank = async () => {
+    if (!user) return;
+    setBankError('');
+    if (!newBank.bankName) { setBankError('Bank name is required'); return; }
+    if (!newBank.accountNumber || newBank.accountNumber.length !== 10) { setBankError('Enter a valid 10-digit account number'); return; }
+    if (!newBank.accountName) { setBankError('Account name is required'); return; }
+
+    setBankLoading(true);
+    try {
+      await saveBankAccount(user.uid, newBank);
+      setBank(newBank);
+      setHasBank(true);
+      setBankSuccess('Bank account added successfully!');
+      setTimeout(() => setBankSuccess(''), 3000);
+    } catch {
+      setBankError('Failed to save bank account. Please try again.');
+    } finally {
+      setBankLoading(false);
+    }
+  };
+
+  const handleRemoveBank = async () => {
+    if (!user) return;
+    try {
+      await removeBankAccount(user.uid);
+      setHasBank(false);
+      setBank({ bankName: '', accountNumber: '', accountName: '' });
+      setNewBank({ bankName: '', accountNumber: '', accountName: '' });
+    } catch {
+      // silently fail
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user || deleteConfirm !== 'DELETE') return;
+    setDeleteLoading(true);
+    setDeleteError('');
+    try {
+      await deleteAccount(user.uid);
+      router.push('/');
+    } catch (error: any) {
+      if (error.code === 'auth/requires-recent-login') {
+        setDeleteError('Please sign out and sign back in before deleting your account.');
+      } else {
+        setDeleteError('Failed to delete account. Please try again.');
+      }
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   return (
@@ -101,7 +203,6 @@ export default function SettingsPage() {
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                aria-label={`Go to ${section.label}`}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-150 ${
                   activeSection === section.id
                     ? section.id === 'danger'
@@ -139,13 +240,9 @@ export default function SettingsPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Full Name
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                   <input
-                    id="fullName"
                     type="text"
-                    title="Full name"
                     value={profile.fullName}
                     onChange={e => setProfile({ ...profile, fullName: e.target.value })}
                     placeholder="Your full name"
@@ -153,27 +250,19 @@ export default function SettingsPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Email Address
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
                   <input
-                    id="email"
                     type="email"
-                    title="Email address"
                     value={profile.email}
-                    onChange={e => setProfile({ ...profile, email: e.target.value })}
-                    placeholder="name@email.com"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
+                    disabled
+                    className="w-full px-4 py-3 border border-gray-100 bg-gray-50 rounded-xl text-sm text-gray-400 cursor-not-allowed"
                   />
+                  <p className="text-xs text-gray-400 mt-1">Email cannot be changed</p>
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Phone Number
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
                   <input
-                    id="phone"
                     type="tel"
-                    title="Phone number"
                     value={profile.phone}
                     onChange={e => setProfile({ ...profile, phone: e.target.value })}
                     placeholder="080XXXXXXXX"
@@ -185,7 +274,6 @@ export default function SettingsPage() {
               <button
                 onClick={handleProfileSave}
                 disabled={profileLoading}
-                aria-label="Save profile changes"
                 className="flex items-center gap-2 px-6 py-3 bg-mtn-yellow text-black text-sm font-bold rounded-xl hover:bg-mtn-yellow-dark transition-all duration-150 disabled:opacity-60"
               >
                 <Save size={15} />
@@ -217,86 +305,36 @@ export default function SettingsPage() {
               )}
 
               <div className="space-y-4">
-                <div>
-                  <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Current Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="currentPassword"
-                      type={showCurrent ? 'text' : 'password'}
-                      title="Current password"
-                      value={passwords.current}
-                      onChange={e => setPasswords({ ...passwords, current: e.target.value })}
-                      placeholder="••••••••"
-                      className="w-full px-4 py-3 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
-                    />
-                    <button
-                      type="button"
-                      aria-label={showCurrent ? 'Hide current password' : 'Show current password'}
-                      onClick={() => setShowCurrent(p => !p)}
-                      className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700"
-                    >
-                      {showCurrent ? <EyeOff size={17} /> : <Eye size={17} />}
-                    </button>
+                {[
+                  { label: 'Current Password', key: 'current', show: showCurrent, toggle: () => setShowCurrent(p => !p) },
+                  { label: 'New Password',      key: 'newPass', show: showNew,     toggle: () => setShowNew(p => !p)     },
+                  { label: 'Confirm New Password', key: 'confirm', show: showConfirm, toggle: () => setShowConfirm(p => !p) },
+                ].map(field => (
+                  <div key={field.key}>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
+                    <div className="relative">
+                      <input
+                        type={field.show ? 'text' : 'password'}
+                        value={passwords[field.key as keyof typeof passwords]}
+                        onChange={e => setPasswords({ ...passwords, [field.key]: e.target.value })}
+                        placeholder="••••••••"
+                        className="w-full px-4 py-3 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
+                      />
+                      <button
+                        type="button"
+                        onClick={field.toggle}
+                        className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700"
+                      >
+                        {field.show ? <EyeOff size={17} /> : <Eye size={17} />}
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div>
-                  <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    New Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="newPassword"
-                      type={showNew ? 'text' : 'password'}
-                      title="New password"
-                      value={passwords.newPass}
-                      onChange={e => setPasswords({ ...passwords, newPass: e.target.value })}
-                      placeholder="••••••••"
-                      className="w-full px-4 py-3 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
-                    />
-                    <button
-                      type="button"
-                      aria-label={showNew ? 'Hide new password' : 'Show new password'}
-                      onClick={() => setShowNew(p => !p)}
-                      className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700"
-                    >
-                      {showNew ? <EyeOff size={17} /> : <Eye size={17} />}
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Confirm New Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="confirmPassword"
-                      type={showConfirm ? 'text' : 'password'}
-                      title="Confirm new password"
-                      value={passwords.confirm}
-                      onChange={e => setPasswords({ ...passwords, confirm: e.target.value })}
-                      placeholder="••••••••"
-                      className="w-full px-4 py-3 pr-11 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
-                    />
-                    <button
-                      type="button"
-                      aria-label={showConfirm ? 'Hide confirm password' : 'Show confirm password'}
-                      onClick={() => setShowConfirm(p => !p)}
-                      className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700"
-                    >
-                      {showConfirm ? <EyeOff size={17} /> : <Eye size={17} />}
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
 
               <button
                 onClick={handlePasswordChange}
                 disabled={securityLoading}
-                aria-label="Update password"
                 className="flex items-center gap-2 px-6 py-3 bg-mtn-yellow text-black text-sm font-bold rounded-xl hover:bg-mtn-yellow-dark transition-all duration-150 disabled:opacity-60"
               >
                 <Lock size={15} />
@@ -320,12 +358,21 @@ export default function SettingsPage() {
                 </div>
               )}
 
+              {bankError && (
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                  <AlertCircle size={16} className="shrink-0" />
+                  {bankError}
+                </div>
+              )}
+
               {hasBank ? (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center shrink-0">
-                        <span className="text-mtn-yellow text-xs font-bold">GTB</span>
+                        <span className="text-mtn-yellow text-xs font-bold">
+                          {bank.bankName.substring(0, 3).toUpperCase()}
+                        </span>
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-900">{bank.bankName}</p>
@@ -334,8 +381,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
                     <button
-                      aria-label="Remove bank account"
-                      onClick={() => { setHasBank(false); setBankSuccess(''); }}
+                      onClick={handleRemoveBank}
                       className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-150"
                     >
                       <Trash2 size={16} />
@@ -348,54 +394,43 @@ export default function SettingsPage() {
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Bank Name
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Bank Name</label>
                     <input
-                      id="bankName"
                       type="text"
-                      title="Bank name"
+                      value={newBank.bankName}
+                      onChange={e => setNewBank({ ...newBank, bankName: e.target.value })}
                       placeholder="e.g. GTBank"
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
                     />
                   </div>
                   <div>
-                    <label htmlFor="accountNumber" className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Account Number
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Account Number</label>
                     <input
-                      id="accountNumber"
                       type="text"
-                      title="Account number"
+                      value={newBank.accountNumber}
+                      onChange={e => setNewBank({ ...newBank, accountNumber: e.target.value.replace(/[^0-9]/g, '').slice(0, 10) })}
                       placeholder="10-digit account number"
                       maxLength={10}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
                     />
                   </div>
                   <div>
-                    <label htmlFor="accountName" className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Account Name
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Account Name</label>
                     <input
-                      id="accountName"
                       type="text"
-                      title="Account name auto-fetched"
-                      placeholder="Auto-fetched after account number"
-                      disabled
-                      className="w-full px-4 py-3 border border-gray-100 bg-gray-50 rounded-xl text-sm text-gray-400 cursor-not-allowed"
+                      value={newBank.accountName}
+                      onChange={e => setNewBank({ ...newBank, accountName: e.target.value })}
+                      placeholder="Account holder name"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mtn-yellow focus:border-mtn-yellow"
                     />
                   </div>
                   <button
-                    aria-label="Add bank account"
-                    onClick={() => {
-                      setHasBank(true);
-                      setBankSuccess('Bank account added successfully!');
-                      setTimeout(() => setBankSuccess(''), 3000);
-                    }}
-                    className="flex items-center gap-2 px-6 py-3 bg-mtn-yellow text-black text-sm font-bold rounded-xl hover:bg-mtn-yellow-dark transition-all duration-150"
+                    onClick={handleSaveBank}
+                    disabled={bankLoading}
+                    className="flex items-center gap-2 px-6 py-3 bg-mtn-yellow text-black text-sm font-bold rounded-xl hover:bg-mtn-yellow-dark transition-all duration-150 disabled:opacity-60"
                   >
                     <Plus size={15} />
-                    Add Bank Account
+                    {bankLoading ? 'Saving...' : 'Add Bank Account'}
                   </button>
                 </div>
               )}
@@ -426,11 +461,10 @@ export default function SettingsPage() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-900">•••• •••• •••• 4242</p>
-                        <p className="text-xs text-gray-400">Chioma Okafor · Expires 12/27</p>
+                        <p className="text-xs text-gray-400">Expires 12/27</p>
                       </div>
                     </div>
                     <button
-                      aria-label="Remove linked card"
                       onClick={() => { setHasCard(false); setCardSuccess(''); }}
                       className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-150"
                     >
@@ -444,7 +478,6 @@ export default function SettingsPage() {
               ) : (
                 <div className="space-y-4">
                   <button
-                    aria-label="Link a new card via Paystack"
                     onClick={() => {
                       setHasCard(true);
                       setCardSuccess('Card linked successfully!');
@@ -479,9 +512,15 @@ export default function SettingsPage() {
                 </p>
               </div>
 
+              {deleteError && (
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                  <AlertCircle size={16} className="shrink-0" />
+                  {deleteError}
+                </div>
+              )}
+
               {!showDeleteModal ? (
                 <button
-                  aria-label="Delete my account"
                   onClick={() => setShowDeleteModal(true)}
                   className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white text-sm font-bold rounded-xl hover:bg-red-600 transition-all duration-150"
                 >
@@ -493,41 +532,32 @@ export default function SettingsPage() {
                   <p className="text-sm font-semibold text-red-700">
                     Type <span className="font-black">DELETE</span> to confirm
                   </p>
-                  <div>
-                    <label htmlFor="deleteConfirm" className="sr-only">
-                      Type DELETE to confirm account deletion
-                    </label>
-                    <input
-                      id="deleteConfirm"
-                      type="text"
-                      title="Type DELETE to confirm account deletion"
-                      value={deleteConfirm}
-                      onChange={e => setDeleteConfirm(e.target.value)}
-                      placeholder="Type DELETE"
-                      className="w-full px-4 py-3 border border-red-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    value={deleteConfirm}
+                    onChange={e => setDeleteConfirm(e.target.value)}
+                    placeholder="Type DELETE"
+                    className="w-full px-4 py-3 border border-red-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
+                  />
                   <div className="flex gap-3">
                     <button
-                      aria-label="Cancel account deletion"
                       onClick={() => { setShowDeleteModal(false); setDeleteConfirm(''); }}
                       className="flex-1 py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-150"
                     >
                       Cancel
                     </button>
                     <button
-                      aria-label="Confirm account deletion"
-                      disabled={deleteConfirm !== 'DELETE'}
+                      onClick={handleDeleteAccount}
+                      disabled={deleteConfirm !== 'DELETE' || deleteLoading}
                       className="flex-1 py-3 rounded-xl bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      Confirm Delete
+                      {deleteLoading ? 'Deleting...' : 'Confirm Delete'}
                     </button>
                   </div>
                 </div>
               )}
             </div>
           )}
-
         </div>
       </div>
     </div>

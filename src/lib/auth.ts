@@ -156,3 +156,61 @@ export async function withdrawFunds(uid: string, amount: number, bankName: strin
     positive: false,
   });
 }
+
+// ---- UPDATE PROFILE ----
+export async function updateProfile(uid: string, data: { fullName: string; phone: string }) {
+  const userRef = ref(db, `users/${uid}`);
+  const snapshot = await get(userRef);
+  await set(userRef, {
+    ...snapshot.val(),
+    ...data,
+  });
+}
+
+// ---- CHANGE PASSWORD ----
+export async function changePassword(currentPassword: string, newPassword: string) {
+  const { reauthenticateWithCredential, EmailAuthProvider, updatePassword } = await import('firebase/auth');
+  const user = auth.currentUser;
+  if (!user || !user.email) throw new Error('No user logged in');
+
+  // Re-authenticate first
+  const credential = EmailAuthProvider.credential(user.email, currentPassword);
+  await reauthenticateWithCredential(user, credential);
+
+  // Then update password
+  await updatePassword(user, newPassword);
+}
+
+// ---- SAVE BANK ACCOUNT ----
+export async function saveBankAccount(uid: string, bankData: { bankName: string; accountNumber: string; accountName: string }) {
+  const userRef = ref(db, `users/${uid}`);
+  const snapshot = await get(userRef);
+  await set(userRef, {
+    ...snapshot.val(),
+    bankAccount: bankData,
+  });
+}
+
+// ---- REMOVE BANK ACCOUNT ----
+export async function removeBankAccount(uid: string) {
+  const userRef = ref(db, `users/${uid}`);
+  const snapshot = await get(userRef);
+  const data = snapshot.val();
+  delete data.bankAccount;
+  await set(userRef, data);
+}
+
+// ---- DELETE ACCOUNT ----
+export async function deleteAccount(uid: string) {
+  const { deleteUser } = await import('firebase/auth');
+  const user = auth.currentUser;
+  if (!user) throw new Error('No user logged in');
+
+  // Delete user data from database
+  await set(ref(db, `users/${uid}`), null);
+  await set(ref(db, `transactions/${uid}`), null);
+  await set(ref(db, `investments/${uid}`), null);
+
+  // Delete Firebase Auth account
+  await deleteUser(user);
+}

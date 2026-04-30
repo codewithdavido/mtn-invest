@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Shield, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import AppLogo from '@/components/ui/AppLogo';
+import { signIn, getUserProfile, logOut } from '@/lib/auth';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -35,20 +36,27 @@ export default function AdminLoginPage() {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with real admin auth API call
-      await new Promise(res => setTimeout(res, 1500));
+      // Sign in with Firebase
+      const user = await signIn(formData.email, formData.password);
 
-      // Simulate wrong credentials
-      if (formData.email !== 'admin@mtninvest.com') {
-        setErrors({ general: 'Invalid credentials. Access denied.' });
-        setIsLoading(false);
+      // Check if user is admin
+      const profile = await getUserProfile(user.uid);
+
+      if (profile?.role !== 'admin') {
+        // Not an admin — sign them out immediately
+        await logOut();
+        setErrors({ general: 'Access denied. You are not an admin.' });
         return;
       }
 
       setSuccessMessage('Access granted! Redirecting to admin panel...');
       setTimeout(() => router.push('/admin-panel'), 2000);
-    } catch {
-      setErrors({ general: 'Something went wrong. Please try again.' });
+    } catch (error: any) {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
+        setErrors({ general: 'Invalid credentials. Access denied.' });
+      } else {
+        setErrors({ general: 'Something went wrong. Please try again.' });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +99,6 @@ export default function AdminLoginPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-1">Admin Sign In</h2>
           <p className="text-sm text-gray-500 mb-6">Enter your admin credentials to continue</p>
 
-          {/* Success message */}
           {successMessage && (
             <div className="mb-4 flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-700">
               <CheckCircle size={16} className="shrink-0 text-emerald-500" />
@@ -99,7 +106,6 @@ export default function AdminLoginPage() {
             </div>
           )}
 
-          {/* General error */}
           {errors.general && (
             <div className="mb-4 flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
               <AlertCircle size={16} className="shrink-0" />
@@ -108,8 +114,6 @@ export default function AdminLoginPage() {
           )}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
-
-            {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Admin Email
@@ -118,7 +122,6 @@ export default function AdminLoginPage() {
                 id="email"
                 name="email"
                 type="email"
-                title="Admin email address"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="admin@mtninvest.com"
@@ -129,7 +132,6 @@ export default function AdminLoginPage() {
               {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
             </div>
 
-            {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Password
@@ -139,7 +141,6 @@ export default function AdminLoginPage() {
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  title="Admin password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
@@ -149,7 +150,6 @@ export default function AdminLoginPage() {
                 />
                 <button
                   type="button"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   onClick={() => setShowPassword(p => !p)}
                   className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-700"
                 >
@@ -159,7 +159,6 @@ export default function AdminLoginPage() {
               {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isLoading || !!successMessage}
