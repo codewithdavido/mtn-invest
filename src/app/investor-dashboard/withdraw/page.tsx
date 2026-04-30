@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Banknote,
   Plus,
@@ -11,6 +11,8 @@ import {
   Wallet,
   Info,
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { withdrawFunds, getTransactions, getUserProfile } from '@/lib/auth';
 
 const linkedBank = {
   id: 'bank-1',
@@ -19,31 +21,39 @@ const linkedBank = {
   accountName: 'Chioma Okafor',
 };
 
-const recentWithdrawals = [
-  { id: 'wd-1', amount: '₦5,340', date: 'Mar 28, 2026', status: 'Processed' },
-  { id: 'wd-2', amount: '₦5,340', date: 'Feb 25, 2026', status: 'Processed' },
-  { id: 'wd-3', amount: '₦5,340', date: 'Jan 20, 2026', status: 'Processed' },
-  { id: 'wd-4', amount: '₦5,340', date: 'Dec 18, 2025', status: 'Pending'   },
-  { id: 'wd-5', amount: '₦5,340', date: 'Nov 10, 2025', status: 'Processed' },
-];
-
 const MINIMUM_WITHDRAWAL = 5340;
-const WALLET_BALANCE = 45000;
 
 function formatNaira(amount: number) {
   return `₦${amount.toLocaleString('en-NG')}`;
 }
 
 export default function WithdrawPage() {
+  const { user } = useAuth();
   const [amount, setAmount] = useState('');
   const [hasBank, setHasBank] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [recentWithdrawals, setRecentWithdrawals] = useState<any[]>([]);
+
+  // Load real wallet balance and recent withdrawals
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user.uid).then((profile) => {
+        setWalletBalance(profile?.walletBalance || 0);
+      });
+
+      getTransactions(user.uid).then((txs) => {
+        const withdrawals = txs.filter((tx: any) => tx.type === 'Withdrawal');
+        setRecentWithdrawals(withdrawals);
+      });
+    }
+  }, [user]);
 
   const amountNum = parseFloat(amount.replace(/,/g, '')) || 0;
-  const isValidAmount = amountNum >= MINIMUM_WITHDRAWAL && amountNum <= WALLET_BALANCE;
-  const exceedsBalance = amountNum > WALLET_BALANCE;
+  const isValidAmount = amountNum >= MINIMUM_WITHDRAWAL && amountNum <= walletBalance;
+  const exceedsBalance = amountNum > walletBalance;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^0-9]/g, '');
@@ -66,14 +76,24 @@ export default function WithdrawPage() {
       setErrorMessage('Amount exceeds your wallet balance');
       return;
     }
+    if (!user) return;
 
     setIsLoading(true);
     try {
-      await new Promise(res => setTimeout(res, 1500));
-      setSuccessMessage(`₦${amount} withdrawal is being processed to your ${linkedBank.bankName} account. You'll receive it within 24 hours.`);
+      await withdrawFunds(user.uid, amountNum, linkedBank.bankName);
+
+      // Refresh balance and withdrawals
+      const profile = await getUserProfile(user.uid);
+      setWalletBalance(profile?.walletBalance || 0);
+
+      const txs = await getTransactions(user.uid);
+      const withdrawals = txs.filter((tx: any) => tx.type === 'Withdrawal');
+      setRecentWithdrawals(withdrawals);
+
+      setSuccessMessage(`${formatNaira(amountNum)} withdrawal is being processed to your ${linkedBank.bankName} account. You'll receive it within 24 hours.`);
       setAmount('');
-    } catch {
-      setErrorMessage('Withdrawal failed. Please try again.');
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Withdrawal failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -88,11 +108,11 @@ export default function WithdrawPage() {
         <p className="text-gray-500 mt-1 text-sm">Withdraw your returns to your linked bank account</p>
       </div>
 
-      {/* Wallet balance */}
+      {/* Wallet balance — real! */}
       <div className="bg-gray-900 rounded-2xl p-6 flex items-center justify-between">
         <div>
           <p className="text-gray-400 text-sm mb-1">Available to Withdraw</p>
-          <p className="text-3xl font-bold text-white">{formatNaira(WALLET_BALANCE)}</p>
+          <p className="text-3xl font-bold text-white">{formatNaira(walletBalance)}</p>
           <p className="text-xs text-gray-500 mt-1">Wallet balance</p>
         </div>
         <div className="w-14 h-14 bg-mtn-yellow rounded-2xl flex items-center justify-center">
@@ -186,7 +206,7 @@ export default function WithdrawPage() {
         )}
         {amount && exceedsBalance && (
           <p className="text-xs text-red-500 mt-1">
-            Amount exceeds your wallet balance of {formatNaira(WALLET_BALANCE)}
+            Amount exceeds your wallet balance of {formatNaira(walletBalance)}
           </p>
         )}
 
@@ -214,7 +234,7 @@ export default function WithdrawPage() {
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Remaining balance</span>
             <span className="font-bold text-emerald-600">
-              {formatNaira(WALLET_BALANCE - amountNum)}
+              {formatNaira(walletBalance - amountNum)}
             </span>
           </div>
         </div>
@@ -234,35 +254,43 @@ export default function WithdrawPage() {
         )}
       </button>
 
-      {/* Recent withdrawals */}
+      {/* Recent withdrawals — real! */}
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
           <h3 className="text-sm font-bold text-gray-900">Recent Withdrawals</h3>
         </div>
         <div className="divide-y divide-gray-50">
-          {recentWithdrawals.map(wd => (
-            <div key={wd.id} className="px-6 py-3.5 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-orange-50 rounded-xl flex items-center justify-center">
-                  <Banknote size={15} className="text-orange-500" />
+          {recentWithdrawals.length === 0 ? (
+            <p className="text-sm text-gray-400 text-center py-6">No withdrawals yet</p>
+          ) : (
+            recentWithdrawals.map((wd: any, index: number) => (
+              <div key={index} className="px-6 py-3.5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-orange-50 rounded-xl flex items-center justify-center">
+                    <Banknote size={15} className="text-orange-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">
+                      Withdrawal to {linkedBank.bankName}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(wd.date).toLocaleDateString('en-NG', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                      })}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">
-                    Withdrawal to {linkedBank.bankName}
-                  </p>
-                  <p className="text-xs text-gray-400">{wd.date}</p>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-gray-900">{formatNaira(wd.amount)}</p>
+                  <span className={`text-xs font-semibold ${
+                    wd.status === 'Processed' ? 'text-emerald-500' : 'text-orange-500'
+                  }`}>
+                    {wd.status}
+                  </span>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-gray-900">{wd.amount}</p>
-                <span className={`text-xs font-semibold ${
-                  wd.status === 'Processed' ? 'text-emerald-500' : 'text-orange-500'
-                }`}>
-                  {wd.status}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

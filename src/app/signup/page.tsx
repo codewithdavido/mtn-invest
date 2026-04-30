@@ -1,5 +1,6 @@
 "use client";
 
+import { signUp } from '@/lib/auth';
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -81,16 +82,21 @@ export default function SignupPage() {
     setIsLoading(true);
 
     // Simulating a successful signup for UI testing
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccessMessage(
-        "Welcome! Your account has been created. Redirecting...",
-      );
-
-      // This moves you to the dashboard we are building
-      setTimeout(() => router.push("/investor-dashboard"), 2000);
-    }, 1500);
-  };
+    try {
+  await signUp(formData.email, formData.password, formData.fullName);
+  setSuccessMessage("Welcome! Your account has been created. Redirecting...");
+  setTimeout(() => router.push("/investor-dashboard"), 2000);
+} catch (error: any) {
+  // Firebase sends specific error codes we can show nicely
+  if (error.code === 'auth/email-already-in-use') {
+    setErrors({ email: 'This email is already registered' });
+  } else {
+    setErrors({ general: 'Something went wrong. Please try again.' });
+  }
+  } finally {
+    setIsLoading(false);
+  }
+}; 
   return (
     <div className="flex flex-col min-h-screen bg-mtn-gray-50">
       <LandingNav />

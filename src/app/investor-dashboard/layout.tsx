@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -17,6 +17,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import AppLogo from "@/components/ui/AppLogo";
+import { useAuth } from "@/context/AuthContext";
+import { logOut, getUserProfile } from "@/lib/auth";
 
 interface NavItem {
   id: string;
@@ -72,10 +74,49 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const [userProfile, setUserProfile] = useState<any>(null);
 
-  const handleLogout = () => {
-    router.push("/");
+  // Fetch user profile from database
+  useEffect(() => {
+    if (user) {
+      getUserProfile(user.uid).then((profile) => {
+        setUserProfile(profile);
+      });
+    }
+  }, [user]);
+
+  // Protect the dashboard — redirect to signin if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/signin');
+    }
+  }, [user, loading, router]);
+
+  // Show nothing while Firebase checks the session
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-10 h-10 border-4 border-mtn-yellow border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-sm text-gray-500">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render dashboard if not logged in
+  if (!user) return null;
+
+  const handleLogout = async () => {
+    await logOut();
+    router.push('/');
   };
+
+  // Get initials from full name
+  const initials = userProfile?.fullName
+    ? userProfile.fullName.split(' ').map((n: string) => n[0]).join('').toUpperCase()
+    : '??';
 
   return (
     <div className="flex min-h-screen bg-gray-50 font-sans">
@@ -117,13 +158,15 @@ export default function DashboardLayout({
         <div className="px-6 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-mtn-yellow flex items-center justify-center shrink-0">
-              <span className="text-sm font-bold text-black">CO</span>
+              <span className="text-sm font-bold text-black">{initials}</span>
             </div>
             <div className="min-w-0">
               <p className="text-sm font-semibold text-white truncate">
-                Chioma Okafor
+                {userProfile?.fullName ?? 'Loading...'}
               </p>
-              <p className="text-xs text-gray-400 truncate">chioma@email.com</p>
+              <p className="text-xs text-gray-400 truncate">
+                {user.email}
+              </p>
             </div>
           </div>
         </div>
@@ -195,7 +238,7 @@ export default function DashboardLayout({
             <div className="hidden sm:flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl">
               <Wallet size={15} className="text-mtn-yellow-dark" />
               <span className="text-sm font-bold text-gray-900">
-                ₦45,000.00
+                ₦{userProfile?.walletBalance?.toLocaleString('en-NG') ?? '0'}
               </span>
             </div>
 
@@ -210,7 +253,7 @@ export default function DashboardLayout({
 
             {/* Avatar */}
             <div className="w-9 h-9 rounded-full bg-mtn-yellow flex items-center justify-center shrink-0">
-              <span className="text-xs font-bold text-black">CO</span>
+              <span className="text-xs font-bold text-black">{initials}</span>
             </div>
           </div>
         </header>

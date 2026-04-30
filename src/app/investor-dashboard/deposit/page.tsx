@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CreditCard,
   Plus,
@@ -10,6 +10,8 @@ import {
   Trash2,
   Wallet,
 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { depositFunds, getTransactions, getUserProfile } from '@/lib/auth';
 
 const quickAmounts = [10000, 20000, 50000, 100000];
 
@@ -21,24 +23,35 @@ const linkedCard = {
   name: 'Chioma Okafor',
 };
 
-const recentDeposits = [
-  { id: 'dep-1', amount: '₦50,000', date: 'Feb 10, 2026', status: 'Success' },
-  { id: 'dep-2', amount: '₦20,000', date: 'Jan 5, 2026',  status: 'Success' },
-  { id: 'dep-3', amount: '₦10,000', date: 'Dec 20, 2025', status: 'Success' },
-  { id: 'dep-4', amount: '₦30,000', date: 'Nov 15, 2025', status: 'Failed'  },
-  { id: 'dep-5', amount: '₦10,000', date: 'Oct 1, 2025',  status: 'Success' },
-];
-
 function formatNaira(amount: number) {
   return `₦${amount.toLocaleString('en-NG')}`;
 }
 
 export default function DepositPage() {
+  const { user } = useAuth();
   const [amount, setAmount] = useState('');
   const [hasCard, setHasCard] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [recentDeposits, setRecentDeposits] = useState<any[]>([]);
+
+  // Load real wallet balance and recent deposits
+  useEffect(() => {
+    if (user) {
+      // Get wallet balance
+      getUserProfile(user.uid).then((profile) => {
+        setWalletBalance(profile?.walletBalance || 0);
+      });
+
+      // Get recent deposits
+      getTransactions(user.uid).then((txs) => {
+        const deposits = txs.filter((tx: any) => tx.type === 'Deposit');
+        setRecentDeposits(deposits);
+      });
+    }
+  }, [user]);
 
   const amountNum = parseFloat(amount.replace(/,/g, '')) || 0;
   const isValidAmount = amountNum >= 10000;
@@ -64,12 +77,21 @@ export default function DepositPage() {
       setErrorMessage('Please link a card first');
       return;
     }
+    if (!user) return;
 
     setIsLoading(true);
     try {
-      // TODO: Replace with Paystack API call
-      await new Promise(res => setTimeout(res, 1500));
-      setSuccessMessage(`₦${amount} has been added to your wallet successfully!`);
+      await depositFunds(user.uid, amountNum);
+
+      // Refresh balance and transactions
+      const profile = await getUserProfile(user.uid);
+      setWalletBalance(profile?.walletBalance || 0);
+
+      const txs = await getTransactions(user.uid);
+      const deposits = txs.filter((tx: any) => tx.type === 'Deposit');
+      setRecentDeposits(deposits);
+
+      setSuccessMessage(`${formatNaira(amountNum)} has been added to your wallet!`);
       setAmount('');
     } catch {
       setErrorMessage('Deposit failed. Please try again.');
@@ -87,11 +109,11 @@ export default function DepositPage() {
         <p className="text-gray-500 mt-1 text-sm">Add money to your wallet to start investing</p>
       </div>
 
-      {/* Wallet balance */}
+      {/* Wallet balance — now real! */}
       <div className="bg-gray-900 rounded-2xl p-6 flex items-center justify-between">
         <div>
           <p className="text-gray-400 text-sm mb-1">Current Wallet Balance</p>
-          <p className="text-3xl font-bold text-white">₦45,000.00</p>
+          <p className="text-3xl font-bold text-white">{formatNaira(walletBalance)}</p>
         </div>
         <div className="w-14 h-14 bg-mtn-yellow rounded-2xl flex items-center justify-center">
           <Wallet size={24} className="text-black" />
@@ -124,7 +146,6 @@ export default function DepositPage() {
         {hasCard ? (
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
             <div className="flex items-center gap-3">
-              {/* Card visual */}
               <div className="w-12 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
                 <span className="text-mtn-yellow text-xs font-bold">{linkedCard.type}</span>
               </div>
@@ -159,7 +180,6 @@ export default function DepositPage() {
       <div className="bg-white rounded-2xl border border-gray-200 p-6">
         <h3 className="text-sm font-bold text-gray-900 mb-4">Deposit Amount</h3>
 
-        {/* Quick amounts */}
         <div className="grid grid-cols-4 gap-2 mb-4">
           {quickAmounts.map(val => (
             <button
@@ -176,7 +196,6 @@ export default function DepositPage() {
           ))}
         </div>
 
-        {/* Custom amount input */}
         <div className="relative">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-sm">₦</span>
           <input
@@ -210,7 +229,7 @@ export default function DepositPage() {
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">New wallet balance</span>
             <span className="font-bold text-emerald-600">
-              ₦{(45000 + amountNum).toLocaleString('en-NG')}
+              {formatNaira(walletBalance + amountNum)}
             </span>
           </div>
         </div>
@@ -234,33 +253,37 @@ export default function DepositPage() {
         Payments are processed securely via Paystack · PCIDSS compliant
       </p>
 
-      {/* Recent deposits */}
+      {/* Recent deposits — now real! */}
       <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
           <h3 className="text-sm font-bold text-gray-900">Recent Deposits</h3>
         </div>
         <div className="divide-y divide-gray-50">
-          {recentDeposits.map(dep => (
-            <div key={dep.id} className="px-6 py-3.5 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center">
-                  <CreditCard size={15} className="text-emerald-500" />
+          {recentDeposits.length === 0 ? (
+            <p className="text-sm text-gray-400 text-center py-6">No deposits yet</p>
+          ) : (
+            recentDeposits.map((dep: any, index: number) => (
+              <div key={index} className="px-6 py-3.5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center">
+                    <CreditCard size={15} className="text-emerald-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Card Deposit</p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(dep.date).toLocaleDateString('en-NG', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                      })}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">Card Deposit</p>
-                  <p className="text-xs text-gray-400">{dep.date}</p>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-gray-900">{formatNaira(dep.amount)}</p>
+                  <span className="text-xs font-semibold text-emerald-500">{dep.status}</span>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-gray-900">{dep.amount}</p>
-                <span className={`text-xs font-semibold ${
-                  dep.status === 'Success' ? 'text-emerald-500' : 'text-red-500'
-                }`}>
-                  {dep.status}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

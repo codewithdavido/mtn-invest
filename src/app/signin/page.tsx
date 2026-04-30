@@ -1,5 +1,6 @@
 'use client';
 
+import { signIn } from '@/lib/auth';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -60,13 +61,15 @@ export default function SignInPage() {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with your actual API call
-      await new Promise((res) => setTimeout(res, 1500));
-
+      await signIn(formData.email, formData.password);
       setSuccessMessage('Welcome back! Redirecting to your dashboard...');
-      setTimeout(() => router.push('/investor-dashboard'), 2500);
-    } catch (err) {
-      setErrors({ general: 'Invalid email or password. Please try again.' });
+      setTimeout(() => router.push('/investor-dashboard'), 2000);
+    } catch (error: any) {
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
+        setErrors({ general: 'Invalid email or password. Please try again.' });
+      } else {
+        setErrors({ general: 'Something went wrong. Please try again.' });
+      }
     } finally {
       setIsLoading(false);
     }

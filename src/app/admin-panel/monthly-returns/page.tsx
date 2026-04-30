@@ -11,27 +11,26 @@ import {
 } from 'lucide-react';
 
 const returnHistory = [
-  { id: 'ret-1', month: 'April 2026',    totalInvestors: 1247, totalPaid: '₦241,175,000', dateCredited: 'Apr 1, 2026',  status: 'Paid'    },
-  { id: 'ret-2', month: 'March 2026',    totalInvestors: 1230, totalPaid: '₦238,365,000', dateCredited: 'Mar 1, 2026',  status: 'Paid'    },
-  { id: 'ret-3', month: 'February 2026', totalInvestors: 1198, totalPaid: '₦231,912,600', dateCredited: 'Feb 1, 2026',  status: 'Paid'    },
-  { id: 'ret-4', month: 'January 2026',  totalInvestors: 1150, totalPaid: '₦222,525,000', dateCredited: 'Jan 1, 2026',  status: 'Paid'    },
-  { id: 'ret-5', month: 'May 2026',      totalInvestors: 1247, totalPaid: '₦241,175,000', dateCredited: 'May 1, 2026',  status: 'Upcoming'},
+  { id: 'ret-1', month: 'April 2026',    totalInvestors: 1247, totalPaid: '₦72,352,500',  dateCredited: 'Apr 1, 2026', status: 'Paid'     },
+  { id: 'ret-2', month: 'March 2026',    totalInvestors: 1230, totalPaid: '₦71,509,500',  dateCredited: 'Mar 1, 2026', status: 'Paid'     },
+  { id: 'ret-3', month: 'February 2026', totalInvestors: 1198, totalPaid: '₦69,573,780',  dateCredited: 'Feb 1, 2026', status: 'Paid'     },
+  { id: 'ret-4', month: 'January 2026',  totalInvestors: 1150, totalPaid: '₦66,757,500',  dateCredited: 'Jan 1, 2026', status: 'Paid'     },
+  { id: 'ret-5', month: 'May 2026',      totalInvestors: 1247, totalPaid: '₦72,352,500',  dateCredited: 'May 1, 2026', status: 'Upcoming' },
 ];
 
 const investorReturns = [
-  { id: 'ir-1', name: 'Chioma Okafor',    plan: 'Standard', shares: 10, amount: '₦13,350',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-2', name: 'Emeka Nwosu',      plan: 'Basic',    shares: 4,  amount: '₦5,340',   status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-3', name: 'Fatima Abdullahi', plan: 'Elite',    shares: 50, amount: '₦66,750',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-4', name: 'Tunde Adeyemi',    plan: 'Custom',   shares: 7,  amount: '₦9,345',   status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-5', name: 'Ngozi Eze',        plan: 'Premium',  shares: 20, amount: '₦26,700',  status: 'Credited', date: 'Apr 1, 2026' },
-  { id: 'ir-6', name: 'Bola Adesanya',    plan: 'Basic',    shares: 4,  amount: '₦5,340',   status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-1', name: 'Chioma Okafor',    plan: 'Standard', shares: 10, amount: '₦13,350', status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-2', name: 'Emeka Nwosu',      plan: 'Basic',    shares: 4,  amount: '₦5,340',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-3', name: 'Fatima Abdullahi', plan: 'Elite',    shares: 50, amount: '₦66,750', status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-4', name: 'Tunde Adeyemi',    plan: 'Custom',   shares: 7,  amount: '₦9,345',  status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-5', name: 'Ngozi Eze',        plan: 'Premium',  shares: 20, amount: '₦26,700', status: 'Credited', date: 'Apr 1, 2026' },
+  { id: 'ir-6', name: 'Bola Adesanya',    plan: 'Basic',    shares: 4,  amount: '₦5,340',  status: 'Credited', date: 'Apr 1, 2026' },
 ];
 
 export default function MonthlyReturnsPage() {
   const [showCreditModal, setShowCreditModal] = useState(false);
   const [crediting, setCrediting] = useState(false);
   const [credited, setCredited] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState('April 2026');
 
   const handleCredit = async () => {
     setCrediting(true);
@@ -65,10 +64,10 @@ export default function MonthlyReturnsPage() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'This Month Paid',     value: '₦241,175,000', icon: CircleDollarSign, color: 'bg-emerald-500' },
+          { label: 'This Month Paid',     value: '₦72,352,500',  icon: CircleDollarSign, color: 'bg-emerald-500' },
           { label: 'Investors Paid',      value: '1,247',         icon: Users,            color: 'bg-blue-500'    },
           { label: 'Next Payout',         value: 'May 1, 2026',   icon: Clock,            color: 'bg-orange-500'  },
-          { label: 'Total Paid All Time', value: '₦934,000,000',  icon: CheckCircle2,     color: 'bg-gray-900'    },
+          { label: 'Total Paid All Time', value: '₦280,193,280',  icon: CheckCircle2,     color: 'bg-gray-900'    },
         ].map((card, i) => (
           <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5">
             <div className={`w-11 h-11 rounded-xl ${card.color} flex items-center justify-center mb-4`}>
@@ -171,7 +170,7 @@ export default function MonthlyReturnsPage() {
               <h3 className="text-lg font-bold text-gray-900 mb-1">Credit Monthly Returns</h3>
               <p className="text-sm text-gray-500">
                 This will credit returns to all <strong>1,247 active investors</strong> for <strong>May 2026</strong>.
-                Total amount: <strong className="text-emerald-600">₦241,175,000</strong>
+                Total amount: <strong className="text-emerald-600">₦72,352,500</strong>
               </p>
             </div>
 
@@ -185,7 +184,7 @@ export default function MonthlyReturnsPage() {
                 <div className="p-4 bg-orange-50 border border-orange-200 rounded-xl flex items-start gap-3">
                   <AlertCircle size={18} className="text-orange-500 shrink-0 mt-0.5" />
                   <p className="text-xs text-orange-700">
-                    This action will credit returns to all active investors immediately. This cannot be undone. Make sure it is the 1st of the month before proceeding.
+                    This action will credit 15% returns to all active investors immediately. This cannot be undone. Make sure it is the 1st of the month before proceeding.
                   </p>
                 </div>
                 <div className="flex gap-3">
